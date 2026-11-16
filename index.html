@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="bn">
 <head>
     <script src='//libtl.com/sdk.js' data-zone='12278984' data-sdk='show_12278984'></script>
@@ -24,29 +24,26 @@
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Grid Menu */
-        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px; }
-        .menu-card { background: white; padding: 20px 15px; border-radius: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; }
-        .menu-card:active { transform: scale(0.96); }
-        .menu-card i { font-size: 28px; color: #2575fc; margin-bottom: 10px; }
-        .menu-card h3 { font-size: 15px; color: #333; }
+        /* Task List Cards */
+        .task-card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .task-info h3 { font-size: 16px; color: #222; margin-bottom: 4px; }
+        .task-info p { font-size: 13px; color: #666; }
+        .task-count { display: inline-block; background: #e8f0fe; color: #2575fc; padding: 3px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; margin-top: 5px; }
 
-        /* Cards & Buttons */
-        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        /* Buttons */
         .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background: #2575fc; color: white; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn:disabled { background: #ccc; cursor: not-allowed; }
-        .btn-danger { background: #e74c3c; }
+        .btn-sm { padding: 10px 16px; border: none; border-radius: 10px; background: #2575fc; color: white; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .btn-sm:disabled, .btn:disabled { background: #ccc; cursor: not-allowed; }
         .btn-success { background: #2ecc71; }
-        
-        /* Inputs */
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; }
+        .btn-bonus { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; }
 
-        /* History List */
-        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
-        .history-item:last-child { border-bottom: none; }
-        .badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
-        .badge-pending { background: #fff3cd; color: #856404; }
-        .badge-approved { background: #d4edda; color: #155724; }
+        /* Inputs */
+        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; }
+
+        /* Timer Modal */
+        #timer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .modal-box { background: white; padding: 25px; border-radius: 18px; text-align: center; width: 100%; max-width: 340px; }
+        .timer-circle { width: 80px; height: 80px; border-radius: 50%; border: 5px solid #2575fc; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; color: #2575fc; margin: 15px auto; }
 
         /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); z-index: 100; }
@@ -56,6 +53,7 @@
 
         /* Auth Screen */
         #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f0f2f5; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -70,6 +68,16 @@
             <button class="btn" onclick="loginUser()">লগইন করুন</button>
             <button class="btn btn-success" onclick="registerUser()">নতুন অ্যাকাউন্ট খুলুন</button>
             <p id="auth-msg" style="color: red; font-size: 13px; text-align: center; margin-top: 10px;"></p>
+        </div>
+    </div>
+
+    <!-- Timer Modal -->
+    <div id="timer-modal">
+        <div class="modal-box">
+            <h3 id="modal-title" style="color: #2575fc;">বিজ্ঞাপন চলছে...</h3>
+            <p style="font-size: 13px; color: #666; margin-top: 5px;">বোনাস পেতে ১৫ সেকেন্ড অপেক্ষা করুন</p>
+            <div class="timer-circle" id="countdown-text">15</div>
+            <p style="font-size: 12px; color: #e74c3c;">টাইমার শেষ না হওয়া পর্যন্ত পেজ কাটবেন না</p>
         </div>
     </div>
 
@@ -90,19 +98,44 @@
     <!-- Main Container -->
     <div class="container">
         <div id="home-section" class="section active">
-            <div class="card">
-                <h3>স্বাগতম! আপনার আর্নিং ড্যাশবোর্ড</h3>
-                <div class="menu-grid">
-                    <div class="menu-card" onclick="alert('টাস্ক শীঘ্রই আসছে!')">
-                        <i class="fas fa-tasks"></i>
-                        <h3>টাস্ক ওয়ার্ক</h3>
-                    </div>
-                    <div class="menu-card" onclick="alert('স্পিন ফিচার আসছে!')">
-                        <i class="fas fa-dharmachakra"></i>
-                        <h3>স্পিন করে আয়</h3>
-                    </div>
+            
+            <!-- প্রথম টাস্ক -->
+            <div class="task-card">
+                <div class="task-info">
+                    <h3><i class="fas fa-ad" style="color:#2575fc;"></i> প্রথম টাস্ক</h3>
+                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.৫০)</p>
+                    <span class="task-count">সম্পন্ন: <span id="t1-count">0</span> / 500</span>
                 </div>
+                <button class="btn-sm" id="btn-t1" onclick="startTask(1, 'অ্যাড দেখুন')">কাজ করুন</button>
             </div>
+
+            <!-- দ্বিতীয় টাস্ক -->
+            <div class="task-card">
+                <div class="task-info">
+                    <h3><i class="fas fa-ad" style="color:#6a11cb;"></i> দ্বিতীয় টাস্ক</h3>
+                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.৫০)</p>
+                    <span class="task-count">সম্পন্ন: <span id="t2-count">0</span> / 500</span>
+                </div>
+                <button class="btn-sm" id="btn-t2" onclick="startTask(2, 'অ্যাড দেখুন')">কাজ করুন</button>
+            </div>
+
+            <!-- তৃতীয় টাস্ক -->
+            <div class="task-card">
+                <div class="task-info">
+                    <h3><i class="fas fa-video" style="color:#e74c3c;"></i> তৃতীয় টাস্ক</h3>
+                    <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ৳ ০.৫০)</p>
+                    <span class="task-count">সম্পন্ন: <span id="t3-count">0</span> / 500</span>
+                </div>
+                <button class="btn-sm" id="btn-t3" onclick="startTask(3, 'ভিডিও দেখুন')">কাজ করুন</button>
+            </div>
+
+            <!-- ডেইলি বোনাস -->
+            <div class="card" style="text-align: center; margin-top: 15px; border: 2px dashed #f39c12;">
+                <h3 style="color: #e67e22;"><i class="fas fa-gift"></i> ডেইলি বোনাস</h3>
+                <p style="font-size: 13px; color: #555; margin: 6px 0;">প্রতিদিন একবার ফ্রি ১০ টাকা বোনাস নিন!</p>
+                <button class="btn btn-bonus" id="btn-bonus" onclick="claimDailyBonus()">৳ ১০.০০ বোনাস নিন</button>
+            </div>
+
         </div>
     </div>
 
@@ -114,15 +147,138 @@
     </div>
 
     <script>
-        // পেজ লোড হওয়ার সময় চেক করা ইউজার লগইন করা আছে কিনা
+        const REWARD_PER_TASK = 0.50; // প্রতি অ্যাড/ভিডিওতে আয় (চাইলে পরিবর্তন করতে পারবেন)
+        const DAILY_BONUS_AMOUNT = 10.00; // ডেইলি বোনাস ১০ টাকা
+        const MAX_LIMIT = 500;
+
         window.onload = function() {
             const currentUser = localStorage.getItem('shuvo_logged_user');
             if (currentUser) {
                 document.getElementById('auth-screen').style.display = 'none';
+                loadUserData();
             }
         };
 
-        // নতুন অ্যাকাউন্ট রেজিস্টার করার ফাংশন
+        function getTodayDate() {
+            return new Date().toISOString().split('T')[0];
+        }
+
+        function loadUserData() {
+            const email = localStorage.getItem('shuvo_logged_user');
+            if (!email) return;
+
+            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
+            let user = users.find(u => u.email === email);
+            if (!user) return;
+
+            // নতুন দিন হলে টাস্ক কাউন্ট রিসেট হবে
+            const today = getTodayDate();
+            if (user.lastDate !== today) {
+                user.t1 = 0;
+                user.t2 = 0;
+                user.t3 = 0;
+                user.lastDate = today;
+                saveUser(user);
+            }
+
+            document.getElementById('user-balance').innerText = (user.balance || 0).toFixed(2);
+            document.getElementById('t1-count').innerText = user.t1 || 0;
+            document.getElementById('t2-count').innerText = user.t2 || 0;
+            document.getElementById('t3-count').innerText = user.t3 || 0;
+
+            if ((user.t1 || 0) >= MAX_LIMIT) document.getElementById('btn-t1').disabled = true;
+            if ((user.t2 || 0) >= MAX_LIMIT) document.getElementById('btn-t2').disabled = true;
+            if ((user.t3 || 0) >= MAX_LIMIT) document.getElementById('btn-t3').disabled = true;
+
+            if (user.lastBonusDate === today) {
+                const bonusBtn = document.getElementById('btn-bonus');
+                bonusBtn.disabled = true;
+                bonusBtn.innerText = 'আজকের বোনাস নেওয়া হয়েছে';
+            }
+        }
+
+        function saveUser(updatedUser) {
+            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
+            const index = users.findIndex(u => u.email === updatedUser.email);
+            if (index !== -1) {
+                users[index] = updatedUser;
+                localStorage.setItem('shuvo_users', JSON.stringify(users));
+            }
+        }
+
+        // টাস্ক ও ১৫ সেকেন্ড টাইমার ফাংশন
+        function startTask(taskNum, titleText) {
+            const email = localStorage.getItem('shuvo_logged_user');
+            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
+            let user = users.find(u => u.email === email);
+            if (!user) return;
+
+            const key = 't' + taskNum;
+            if ((user[key] || 0) >= MAX_LIMIT) {
+                alert('আজকের ৫০০টি টাস্ক পূর্ণ হয়েছে!');
+                return;
+            }
+
+            // Monetag বিজ্ঞাপন চালু করা
+            if (typeof show_12278984 === 'function') {
+                show_12278984().catch(e => console.log('Ad loading:', e));
+            }
+
+            // ১৫ সেকেন্ডের টাইমার পপআপ দেখানো
+            const modal = document.getElementById('timer-modal');
+            const countdownEl = document.getElementById('countdown-text');
+            document.getElementById('modal-title').innerText = titleText + ' চলছে...';
+            
+            let seconds = 15;
+            countdownEl.innerText = seconds;
+            modal.style.display = 'flex';
+
+            const interval = setInterval(() => {
+                seconds--;
+                countdownEl.innerText = seconds;
+
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    modal.style.display = 'none';
+
+                    // ব্যালেন্স ও টাস্ক সংখ্যা যোগ করা
+                    user[key] = (user[key] || 0) + 1;
+                    user.balance = (user.balance || 0) + REWARD_PER_TASK;
+                    saveUser(user);
+                    loadUserData();
+
+                    alert('অভিনন্দন! আপনার অ্যাকাউন্টে ৳ ' + REWARD_PER_TASK.toFixed(2) + ' যোগ হয়েছে।');
+                }
+            }, 1000);
+        }
+
+        // ডেইলি বোনাস ফাংশন (১০ টাকা)
+        function claimDailyBonus() {
+            const email = localStorage.getItem('shuvo_logged_user');
+            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
+            let user = users.find(u => u.email === email);
+            if (!user) return;
+
+            const today = getTodayDate();
+            if (user.lastBonusDate === today) {
+                alert('আপনি আজকের ডেইলি বোনাস ইতিমধ্যে নিয়েছেন!');
+                return;
+            }
+
+            // বোনাসের সময়ও একটি অ্যাড দেখানো
+            if (typeof show_12278984 === 'function') {
+                show_12278984().catch(e => console.log('Ad loading:', e));
+            }
+
+            user.balance = (user.balance || 0) + DAILY_BONUS_AMOUNT;
+            user.lastBonusDate = today;
+            saveUser(user);
+            loadUserData();
+
+            alert('অভিনন্দন! আপনি ১০ টাকা ডেইলি বোনাস পেয়েছেন।');
+        }
+
+        // রেজিস্ট্রেশন ফাংশন
         function registerUser() {
             const email = document.getElementById('auth-email').value.trim();
             const pass = document.getElementById('auth-pass').value.trim();
@@ -135,27 +291,25 @@
             }
 
             let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            const existingUser = users.find(u => u.email === email);
-
-            if (existingUser) {
+            if (users.find(u => u.email === email)) {
                 msg.style.color = 'red';
                 msg.innerText = 'এই ইমেইল দিয়ে ইতোমধ্যে অ্যাকাউন্ট রয়েছে!';
                 return;
             }
 
-            users.push({ email: email, pass: pass, balance: 0 });
+            users.push({ email: email, pass: pass, balance: 0, t1: 0, t2: 0, t3: 0, lastDate: getTodayDate(), lastBonusDate: '' });
             localStorage.setItem('shuvo_users', JSON.stringify(users));
             localStorage.setItem('shuvo_logged_user', email);
 
             msg.style.color = 'green';
             msg.innerText = 'অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!';
-            
             setTimeout(() => {
                 document.getElementById('auth-screen').style.display = 'none';
-            }, 1000);
+                loadUserData();
+            }, 800);
         }
 
-        // লগইন করার ফাংশন
+        // লগইন ফাংশন
         function loginUser() {
             const email = document.getElementById('auth-email').value.trim();
             const pass = document.getElementById('auth-pass').value.trim();
@@ -176,14 +330,15 @@
                 msg.innerText = 'লগইন সফল হয়েছে!';
                 setTimeout(() => {
                     document.getElementById('auth-screen').style.display = 'none';
-                }, 1000);
+                    loadUserData();
+                }, 800);
             } else {
                 msg.style.color = 'red';
                 msg.innerText = 'ইমেইল অথবা পাসওয়ার্ড সঠিক নয়!';
             }
         }
 
-        // লগআউট করার ফাংশন
+        // লগআউট ফাংশন
         function logoutUser() {
             localStorage.removeItem('shuvo_logged_user');
             document.getElementById('auth-screen').style.display = 'flex';
