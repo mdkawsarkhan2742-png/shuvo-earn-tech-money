@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
     <script src='//libtl.com/sdk.js' data-zone='12278984' data-sdk='show_12278984'></script>
@@ -103,7 +103,7 @@
             <div class="task-card">
                 <div class="task-info">
                     <h3><i class="fas fa-ad" style="color:#2575fc;"></i> প্রথম টাস্ক</h3>
-                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.৫০)</p>
+                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
                     <span class="task-count">সম্পন্ন: <span id="t1-count">0</span> / 500</span>
                 </div>
                 <button class="btn-sm" id="btn-t1" onclick="startTask(1, 'অ্যাড দেখুন')">কাজ করুন</button>
@@ -113,7 +113,7 @@
             <div class="task-card">
                 <div class="task-info">
                     <h3><i class="fas fa-ad" style="color:#6a11cb;"></i> দ্বিতীয় টাস্ক</h3>
-                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.৫০)</p>
+                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
                     <span class="task-count">সম্পন্ন: <span id="t2-count">0</span> / 500</span>
                 </div>
                 <button class="btn-sm" id="btn-t2" onclick="startTask(2, 'অ্যাড দেখুন')">কাজ করুন</button>
@@ -123,7 +123,7 @@
             <div class="task-card">
                 <div class="task-info">
                     <h3><i class="fas fa-video" style="color:#e74c3c;"></i> তৃতীয় টাস্ক</h3>
-                    <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ৳ ০.৫০)</p>
+                    <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ৳ ০.০৭)</p>
                     <span class="task-count">সম্পন্ন: <span id="t3-count">0</span> / 500</span>
                 </div>
                 <button class="btn-sm" id="btn-t3" onclick="startTask(3, 'ভিডিও দেখুন')">কাজ করুন</button>
@@ -147,7 +147,7 @@
     </div>
 
     <script>
-        const REWARD_PER_TASK = 0.50; // প্রতি অ্যাড/ভিডিওতে আয় (চাইলে পরিবর্তন করতে পারবেন)
+        const REWARD_PER_TASK = 0.07; // প্রতি টাস্কে ৭ পয়সা (0.07 টাকা)
         const DAILY_BONUS_AMOUNT = 10.00; // ডেইলি বোনাস ১০ টাকা
         const MAX_LIMIT = 500;
 
@@ -241,7 +241,7 @@
                     clearInterval(interval);
                     modal.style.display = 'none';
 
-                    // ব্যালেন্স ও টাস্ক সংখ্যা যোগ করা
+                    // ব্যালেন্স ও টাস্ক সংখ্যা যোগ করা (৭ পয়সা বা 0.07)
                     user[key] = (user[key] || 0) + 1;
                     user.balance = (user.balance || 0) + REWARD_PER_TASK;
                     saveUser(user);
