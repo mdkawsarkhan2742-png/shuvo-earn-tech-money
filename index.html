@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHUVO EASY EARN MONEY</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f0f2f5; color: #333; padding-bottom: 70px; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .header-top h2 { font-size: 18px; font-weight: bold; }
+        .balance-card { background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 15px; backdrop-filter: blur(5px); text-align: center; }
+        .balance-card p { font-size: 13px; opacity: 0.9; }
+        .balance-card h1 { font-size: 32px; margin: 5px 0; }
+
+        /* Container & Sections */
+        .container { padding: 15px; max-width: 500px; margin: 0 auto; }
+        .section { display: none; animation: fadeIn 0.3s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Grid Menu */
+        .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 10px; }
+        .menu-card { background: white; padding: 20px 15px; border-radius: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); cursor: pointer; transition: 0.2s; }
+        .menu-card:active { transform: scale(0.96); }
+        .menu-card i { font-size: 28px; color: #2575fc; margin-bottom: 10px; }
+        .menu-card h3 { font-size: 15px; color: #333; }
+
+        /* Cards & Buttons */
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background: #2575fc; color: white; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-danger { background: #e74c3c; }
+        .btn-success { background: #2ecc71; }
+        
+        /* Inputs */
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; }
+
+        /* History List */
+        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; }
+        .history-item:last-child { border-bottom: none; }
+        .badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-approved { background: #d4edda; color: #155724; }
+
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); z-index: 100; }
+        .nav-item { text-align: center; color: #777; font-size: 12px; cursor: pointer; }
+        .nav-item.active { color: #2575fc; font-weight: bold; }
+        .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
+
+        /* Auth Screen */
+        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f0f2f5; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- Login / Register Screen -->
+    <div id="auth-screen">
+        <div class="card" style="width: 100%; max-width: 400px;">
+            <h2 style="text-align: center; color: #2575fc; margin-bottom: 15px;">SHUVO EASY EARN MONEY</h2>
+            <input type="email" id="auth-email" placeholder="আপনার ইমেইল দিন">
+            <input type="password" id="auth-pass" placeholder="পাসওয়ার্ড দিন">
+            <input type="text" id="auth-refer" placeholder="রেফার কোড (ঐচ্ছিক)">
+            <button class="btn" onclick="loginUser()">লগইন করুন</button>
+            <button class="btn btn-success" onclick="registerUser()">নতুন অ্যাকাউন্ট খুলুন</button>
+            <p id="auth-msg" style="color: red; font-size: 13px; text-align: center; margin-top: 10px;"></p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">
+            <h2>SHUVO EASY EARN</h2>
+            <button onclick="logoutUser()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 8px; cursor: pointer;">
+                <i class="fas fa-sign-out-alt"></i> লগআউট
+            </button>
+        </div>
+        <div c
