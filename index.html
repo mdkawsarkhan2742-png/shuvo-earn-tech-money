@@ -28,7 +28,7 @@
         .section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Task List Cards */
+        /* Task & Card Lists */
         .task-card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .task-info h3 { font-size: 16px; color: #222; margin-bottom: 4px; }
         .task-info p { font-size: 13px; color: #666; }
@@ -41,19 +41,20 @@
         .btn-success { background: #2ecc71; }
         .btn-bonus { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; }
         .btn-admin { background: #e74c3c; margin-top: 15px; }
+        .btn-withdraw { background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%); color: white; margin-top: 15px; }
 
-        /* Inputs */
-        input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; }
+        /* Inputs & Select */
+        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; background: #fff; }
 
         /* Timer Modal */
         #timer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-box { background: white; padding: 25px; border-radius: 18px; text-align: center; width: 100%; max-width: 340px; }
         .timer-circle { width: 80px; height: 80px; border-radius: 50%; border: 5px solid #2575fc; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; color: #2575fc; margin: 15px auto; }
 
-        /* Admin Panel Modal */
-        #admin-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 400; display: none; padding: 20px; overflow-y: auto; }
-        .admin-box { background: white; padding: 20px; border-radius: 15px; max-width: 450px; margin: 30px auto; }
-        .user-row { background: #f9f9f9; padding: 10px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #2575fc; font-size: 13px; }
+        /* Admin Panel & Withdraw Modal */
+        .custom-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 400; display: none; padding: 20px; overflow-y: auto; }
+        .modal-content-box { background: white; padding: 20px; border-radius: 15px; max-width: 450px; margin: 30px auto; }
+        .user-row, .req-row { background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #2575fc; font-size: 13px; }
 
         /* Bottom Nav */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); z-index: 100; }
@@ -91,15 +92,44 @@
         </div>
     </div>
 
+    <!-- Withdraw Modal (User View) -->
+    <div id="withdraw-modal" class="custom-modal">
+        <div class="modal-content-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="color: #00b09b;"><i class="fas fa-wallet"></i> টাকা উত্তোলন (Withdraw)</h3>
+                <button onclick="closeWithdrawModal()" style="background: #ccc; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">বন্ধ করুন</button>
+            </div>
+            <p style="font-size: 12px; color: #e67e22; margin-bottom: 10px; font-weight: bold; background: #fff8e1; padding: 8px; border-radius: 6px;">
+                ⚠️ সর্বনিম্ন ২০০০ টাকা হলে উইথড্র করতে পারবেন। সর্বোচ্চ ২৪ ঘণ্টার মধ্যে পেমেন্ট কমপ্লিট ও সাকসেসফুল হয়ে যাবে।
+            </p>
+            <label style="font-size: 13px; font-weight: bold;">পেমেন্ট মেথড সিলেক্ট করুন:</label>
+            <select id="withdraw-method">
+                <option value="Bkash">বিকাশ (Bkash)</option>
+                <option value="Nagad">নগদ (Nagad)</option>
+                <option value="Rocket">রকেট (Rocket)</option>
+            </select>
+            <input type="text" id="withdraw-number" placeholder="আপনার পেমেন্ট নম্বর দিন (যেমন: 017xxxxxxxx)">
+            <input type="number" id="withdraw-amount" placeholder="টাকার পরিমাণ (সর্বনিম্ন ২০০০)">
+            <button class="btn btn-success" onclick="submitWithdrawRequest()">উইথড্র রিকোয়েস্ট পাঠান</button>
+        </div>
+    </div>
+
     <!-- Admin Panel Modal -->
-    <div id="admin-modal">
-        <div class="admin-box">
+    <div id="admin-modal" class="custom-modal">
+        <div class="modal-content-box">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <h3 style="color: #e74c3c;"><i class="fas fa-user-shield"></i> অ্যাডমিন প্যানেল</h3>
                 <button onclick="closeAdminPanel()" style="background: #ccc; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">বন্ধ করুন</button>
             </div>
-            <div id="admin-user-list">
-                <!-- ইউজার লিস্ট এখানে শো করবে -->
+            
+            <h4 style="color: #2575fc; margin-bottom: 8px; border-bottom: 2px solid #eee; padding-bottom: 4px;">📥 উইথড্র রিকোয়েস্ট সমূহ:</h4>
+            <div id="admin-withdraw-requests" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
+                <!-- উইথড্র রিকোয়েস্ট লিস্ট -->
+            </div>
+
+            <h4 style="color: #2575fc; margin-bottom: 8px; border-bottom: 2px solid #eee; padding-bottom: 4px;">👥 রেজিস্টার্ড ইউজার লিস্ট:</h4>
+            <div id="admin-user-list" style="max-height: 200px; overflow-y: auto;">
+                <!-- ইউজার লিস্ট -->
             </div>
         </div>
     </div>
@@ -164,6 +194,9 @@
                 <p style="font-size: 13px; color: #555; margin: 6px 0;">প্রতিদিন একবার ফ্রি ১০ টাকা বোনাস নিন!</p>
                 <button class="btn btn-bonus" id="btn-bonus" onclick="claimDailyBonus()">৳ ১০.০০ বোনাস নিন</button>
             </div>
+
+            <!-- Withdraw Button -->
+            <button class="btn btn-withdraw" onclick="openWithdrawModal()"><i class="fas fa-hand-holding-usd"></i> টাকা উত্তোলন (Withdraw)</button>
 
             <!-- Admin Panel Trigger Button -->
             <button class="btn btn-admin" onclick="openAdminPanel()"><i class="fas fa-lock"></i> অ্যাডমিন প্যানেল (গোপন)</button>
@@ -323,6 +356,62 @@
             alert('অভিনন্দন! আপনি ১০ টাকা ডেইলি বোনাস পেয়েছেন।');
         }
 
+        // উইথড্র মোডাল ফাংশন
+        function openWithdrawModal() {
+            document.getElementById('withdraw-modal').style.display = 'block';
+        }
+
+        function closeWithdrawModal() {
+            document.getElementById('withdraw-modal').style.display = 'none';
+        }
+
+        function submitWithdrawRequest() {
+            const email = localStorage.getItem('shuvo_logged_user');
+            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
+            let user = users.find(u => u.email === email);
+            if (!user) return;
+
+            const method = document.getElementById('withdraw-method').value;
+            const number = document.getElementById('withdraw-number').value.trim();
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+
+            if (!number) {
+                alert('দয়া করে আপনার পেমেন্ট নম্বর দিন!');
+                return;
+            }
+
+            if (isNaN(amount) || amount < 2000) {
+                alert('সর্বনিম্ন ২০০০ টাকা উইথড্র করতে হবে! ২০০০ টাকার কম উইথড্র করা যাবে না।');
+                return;
+            }
+
+            if (amount > user.balance) {
+                alert('আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!');
+                return;
+            }
+
+            // উইথড্র রিকোয়েস্ট সংরক্ষণ
+            let requests = JSON.parse(localStorage.getItem('shuvo_withdraw_requests')) || [];
+            requests.push({
+                email: email,
+                method: method,
+                number: number,
+                amount: amount,
+                date: new Date().toLocaleString()
+            });
+            localStorage.setItem('shuvo_withdraw_requests', JSON.stringify(requests));
+
+            // সাময়িকভাবে ব্যালেন্স থেকে মাইনাস করে রাখা
+            user.balance = Number((user.balance - amount).toFixed(2));
+            saveUser(user);
+            loadUserData();
+
+            alert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে! সর্বোচ্চ ২৪ ঘণ্টার মধ্যে পেমেন্ট কমপ্লিট হয়ে যাবে।');
+            closeWithdrawModal();
+            document.getElementById('withdraw-number').value = '';
+            document.getElementById('withdraw-amount').value = '';
+        }
+
         // অ্যাডমিন প্যানেল ওপেন করার ফাংশন
         function openAdminPanel() {
             const enteredPin = prompt("দয়া করে অ্যাডমিন পিন কোড দিন:");
@@ -331,26 +420,51 @@
                 return;
             }
 
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            const listContainer = document.getElementById('admin-user-list');
-            listContainer.innerHTML = '';
+            loadAdminData();
+            document.getElementById('admin-modal').style.display = 'block';
+        }
 
-            if (users.length === 0) {
-                listContainer.innerHTML = '<p style="text-align:center; color:#777;">কোনো ইউজার পাওয়া যায়নি।</p>';
+        function loadAdminData() {
+            // উইথড্র রিকোয়েস্ট লোড
+            let requests = JSON.parse(localStorage.getItem('shuvo_withdraw_requests')) || [];
+            const reqContainer = document.getElementById('admin-withdraw-requests');
+            reqContainer.innerHTML = '';
+
+            if (requests.length === 0) {
+                reqContainer.innerHTML = '<p style="text-align:center; color:#777; font-size:12px;">কোনো উইথড্র রিকোয়েস্ট নেই।</p>';
             } else {
-                users.forEach(u => {
-                    listContainer.innerHTML += `
-                        <div class="user-row">
-                            <b>ইমেইল:</b> ${u.email}<br>
-                            <b>ব্যালেন্স:</b> ৳ ${Number(u.balance || 0).toFixed(2)}<br>
-                            <b>টাস্ক সম্পন্ন:</b> T1: ${u.t1 || 0}, T2: ${u.t2 || 0}, T3: ${u.t3 || 0}<br>
-                            <button onclick="clearUserBalance('${u.email}')" style="background:#2ecc71; color:white; border:none; padding:5px 10px; border-radius:5px; margin-top:5px; cursor:pointer;">পেমেন্ট সম্পন্ন (ব্যালেন্স জিরো করুন)</button>
+                requests.forEach((req, index) => {
+                    reqContainer.innerHTML += `
+                        <div class="req-row">
+                            <b>ইউজার:</b> ${req.email}<br>
+                            <b>মেথড:</b> ${req.method} | <b>নম্বর:</b> ${req.number}<br>
+                            <b>পরিমাণ:</b> ৳ ${req.amount.toFixed(2)}<br>
+                            <span style="font-size:11px; color:#555;">সময়: ${req.date}</span><br>
+                            <button onclick="acceptWithdrawRequest(${index})" style="background:#2ecc71; color:white; border:none; padding:6px 12px; border-radius:5px; margin-top:6px; cursor:pointer; font-weight:bold;"><i class="fas fa-check-circle"></i> পেমেন্ট এক্সেপ্ট ও কনফার্ম করুন (সাকসেস)</button>
                         </div>
                     `;
                 });
             }
 
-            document.getElementById('admin-modal').style.display = 'block';
+            // ইউজার লিস্ট লোড
+            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
+            const listContainer = document.getElementById('admin-user-list');
+            listContainer.innerHTML = '';
+
+            if (users.length === 0) {
+                listContainer.innerHTML = '<p style="text-align:center; color:#777; font-size:12px;">কোনো ইউজার পাওয়া যায়নি।</p>';
+            } else {
+                users.forEach(u => {
+                    listContainer.innerHTML += `
+                        <div class="user-row">
+                            <b>ইমেইল:</b> ${u.email}<br>
+                            <b>অবশিষ্ট ব্যালেন্স:</b> ৳ ${Number(u.balance || 0).toFixed(2)}<br>
+                            <b>টাস্ক সম্পন্ন:</b> T1: ${u.t1 || 0}, T2: ${u.t2 || 0}, T3: ${u.t3 || 0}<br>
+                            <button onclick="clearUserBalance('${u.email}')" style="background:#e74c3c; color:white; border:none; padding:4px 8px; border-radius:4px; margin-top:5px; cursor:pointer;">ব্যালেন্স জিরো করুন</button>
+                        </div>
+                    `;
+                });
+            }
         }
 
         function closeAdminPanel() {
@@ -358,9 +472,21 @@
             loadUserData();
         }
 
-        // পেমেন্ট দেওয়ার পর ইউজারের ব্যালেন্স জিরো করার ফাংশন
+        // উইথড্র রিকোয়েস্ট এক্সেপ্ট করার ফাংশন
+        function acceptWithdrawRequest(index) {
+            if (!confirm('আপনি কি এই পেমেন্ট রিকোয়েস্টটি এক্সেপ্ট ও কনফার্ম (সাকসেস) করতে চান?')) return;
+
+            let requests = JSON.parse(localStorage.getItem('shuvo_withdraw_requests')) || [];
+            requests.splice(index, 1); // রিকোয়েস্ট লিস্ট থেকে মুছে ফেলা
+            localStorage.setItem('shuvo_withdraw_requests', JSON.stringify(requests));
+
+            alert('উইথড্র সফলভাবে এক্সেপ্ট ও কনফার্ম করা হয়েছে!');
+            loadAdminData();
+        }
+
+        // সরাসরি ইউজারের ব্যালেন্স জিরো করার ফাংশন
         function clearUserBalance(email) {
-            if (!confirm(email + ' কে পেমেন্ট দেওয়া হয়েছে নিশ্চিত করুন এবং ব্যালেন্স জিরো করুন?')) return;
+            if (!confirm(email + ' এর ব্যালেন্স জিরো করতে চান?')) return;
 
             let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
             let user = users.find(u => u.email === email);
@@ -371,7 +497,7 @@
                 user.t3 = 0;
                 saveUser(user);
                 alert('সফলভাবে ব্যালেন্স জিরো করা হয়েছে!');
-                openAdminPanel(); // লিস্ট রিফ্রেশ করার জন্য
+                loadAdminData();
             }
         }
 
