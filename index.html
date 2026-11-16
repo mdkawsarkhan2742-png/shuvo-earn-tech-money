@@ -9,236 +9,124 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex flex-col">
+<body class="bg-slate-950 text-white min-h-screen flex flex-col font-sans">
 
     <!-- Header / Navbar -->
-    <header class="bg-slate-800 p-4 shadow-md flex justify-between items-center">
-        <h1 class="text-lg font-bold text-emerald-400">⚡ Shuvo Earn Tech</h1>
+    <header class="bg-slate-900 border-b border-slate-800 p-4 shadow-lg flex justify-between items-center sticky top-0 z-40">
+        <h1 class="text-base font-extrabold text-emerald-400 flex items-center gap-1">⚡ Shuvo Earn</h1>
         <div class="flex items-center gap-2">
-            <span id="userBalance" class="bg-slate-700 px-3 py-1 rounded-full text-sm font-semibold">৳ 0.00</span>
-            <button onclick="openAdminModal()" class="bg-red-600 px-2 py-1 rounded text-xs">Admin</button>
+            <span id="userBalance" class="bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs font-bold text-emerald-300 shadow-inner">৳ 0.00</span>
+            <button onclick="openAdminModal()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs font-bold shadow-md transition">Admin</button>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-20">
+    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-24 space-y-4">
         
-        <!-- User Welcome Section -->
-        <div class="bg-slate-800 p-4 rounded-xl shadow mb-4">
-            <h2 id="welcomeText" class="text-xl font-bold">স্বাগতম, ইউজার!</h2>
-            <p class="text-xs text-slate-400 mt-1">ইউনিক আইডি: <span id="userIdDisplay">-</span></p>
+        <!-- Top Notice & Welcome Section -->
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-800 p-4 rounded-2xl shadow-xl text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
+            <p class="text-[11px] font-bold text-yellow-400 tracking-wider uppercase mb-1">📢 বিশেষ ঘোষণা</p>
+            <h2 class="text-xs font-bold text-slate-100">আসসালামু আলাইকুম, সকলে ভালো করে কাজ করবেন।</h2>
+            <div class="mt-3 pt-2 border-t border-slate-800/80 flex justify-between text-[11px] text-slate-400">
+                <span>আইডি: <span id="userIdDisplay" class="font-bold text-slate-200">-</span></span>
+                <span>আজকের কাজ: <span id="totalTodayTasks" class="font-bold text-emerald-400">0</span>/1500</span>
+            </div>
         </div>
 
-        <!-- Task Section -->
+        <!-- Bonus Claim Section (Orange Color) -->
+        <div class="bg-slate-900 border border-orange-500/30 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
+            <div class="absolute left-0 top-0 w-1.5 h-full bg-orange-500"></div>
+            <div class="pl-2">
+                <h4 class="font-bold text-sm text-orange-400">🎁 ডেইলি বোনাস ক্লিম</h4>
+                <p class="text-[11px] text-slate-400">প্রতি ২৪ ঘণ্টায় একবার ফ্রি বোনাস নিন</p>
+            </div>
+            <button onclick="claimBonus()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-orange-500/20 transition active:scale-95">ক্লিম করুন</button>
+        </div>
+
+        <!-- Task Section (Different Unique Colors) -->
         <div class="space-y-3">
-            <h3 class="font-semibold text-emerald-300">ডেইলি টাস্কসমূহ (৫০০ লিমি트)</h3>
+            <h3 class="font-bold text-xs text-slate-400 uppercase tracking-wider px-1">ডেইলি টাস্কসমূহ (১৫ সে. • ৭ পয়সা)</h3>
             
-            <div class="bg-slate-800 p-3 rounded-xl flex justify-between items-center">
-                <div>
-                    <h4 class="font-medium">টাস্ক ১ (অ্যাড ভিজিট)</h4>
-                    <p class="text-xs text-slate-400">প্রতি টাস্কে ৫ টাকা</p>
+            <!-- Task 1: Green (সবুজ) -->
+            <div class="bg-slate-900 border border-emerald-500/20 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
+                <div class="absolute left-0 top-0 w-1.5 h-full bg-emerald-500"></div>
+                <div class="pl-2">
+                    <h4 class="font-bold text-sm text-emerald-400">টাস্ক ১ (অ্যাড ভিজিট)</h4>
+                    <p class="text-[11px] text-slate-400">৳০.০৭ | বাকি: <span id="t1Count">500</span>/500</p>
                 </div>
-                <button onclick="completeTask('t1', 5)" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-bold">কাজ করুন</button>
+                <button onclick="startAdTask('t1', 0.07)" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/20 transition active:scale-95">কাজ করুন</button>
             </div>
 
-            <div class="bg-slate-800 p-3 rounded-xl flex justify-between items-center">
-                <div>
-                    <h4 class="font-medium">টাস্ক ২ (ভিডিও টাস্ক)</h4>
-                    <p class="text-xs text-slate-400">প্রতি টাস্কে ১০ টাকা</p>
+            <!-- Task 2: Blue (নীল) -->
+            <div class="bg-slate-900 border border-blue-500/20 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
+                <div class="absolute left-0 top-0 w-1.5 h-full bg-blue-500"></div>
+                <div class="pl-2">
+                    <h4 class="font-bold text-sm text-blue-400">টাস্ক ২ (ভিডিও টাস্ক)</h4>
+                    <p class="text-[11px] text-slate-400">৳০.০৭ | বাকি: <span id="t2Count">500</span>/500</p>
                 </div>
-                <button onclick="completeTask('t2', 10)" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-bold">কাজ করুন</button>
+                <button onclick="startAdTask('t2', 0.07)" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-blue-600/20 transition active:scale-95">কাজ করুন</button>
             </div>
 
-            <div class="bg-slate-800 p-3 rounded-xl flex justify-between items-center">
-                <div>
-                    <h4 class="font-medium">টাস্ক ৩ (লিংক শেয়ার)</h4>
-                    <p class="text-xs text-slate-400">প্রতি টাস্কে ১৫ টাকা</p>
+            <!-- Task 3: Red (লাল) -->
+            <div class="bg-slate-900 border border-red-500/20 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
+                <div class="absolute left-0 top-0 w-1.5 h-full bg-red-500"></div>
+                <div class="pl-2">
+                    <h4 class="font-bold text-sm text-red-400">টাস্ক ৩ (লিংক শেয়ার)</h4>
+                    <p class="text-[11px] text-slate-400">৳০.০৭ | বাকি: <span id="t3Count">500</span>/500</p>
                 </div>
-                <button onclick="completeTask('t3', 15)" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-bold">কাজ করুন</button>
+                <button onclick="startAdTask('t3', 0.07)" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-red-600/20 transition active:scale-95">কাজ করুন</button>
             </div>
         </div>
 
-        <!-- Withdrawal Section -->
-        <div class="mt-6 bg-slate-800 p-4 rounded-xl">
-            <h3 class="font-semibold text-emerald-300 mb-2">টাকা উত্তোলন (Withdraw)</h3>
-            <p class="text-xs text-yellow-400 mb-3">⚠️ ন্যূনতম উইথড্র ২০০০ টাকা। ২৪ ঘণ্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
-            <input type="number" id="withdrawAmount" placeholder="পরিমাণ লিখুন (৳)" class="w-full bg-slate-700 p-2 rounded mb-2 text-white border border-slate-600">
-            <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded font-bold">উইথড্র রিকোয়েস্ট পাঠান</button>
+        <!-- Ad Timer / View Modal (15 Seconds) -->
+        <div id="adModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl w-full max-w-sm text-center space-y-4 shadow-2xl">
+                <h3 class="text-base font-extrabold text-emerald-400">📺 বিজ্ঞাপন লোড হচ্ছে...</h3>
+                <p class="text-xs text-slate-400">অনুগ্রহ করে ১৫ সেকেন্ড অপেক্ষা করুন।</p>
+                
+                <div class="my-4 bg-slate-950 py-4 rounded-2xl border border-slate-800">
+                    <span id="timerCountdown" class="text-5xl font-black text-yellow-400">15</span>
+                    <p class="text-[11px] text-slate-400 mt-1">সেকেন্ড বাকি আছে</p>
+                </div>
+
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="progressBar" class="bg-emerald-500 h-full w-full transition-all duration-1000"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Withdrawal Section with Bkash, Nagad, Rocket -->
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl space-y-3">
+            <h3 class="font-bold text-sm text-emerald-400 flex items-center gap-1.5">💸 টাকা উত্তোলন (Withdraw)</h3>
+            <p class="text-[11px] text-yellow-400/90 bg-yellow-500/10 p-2 rounded-xl border border-yellow-500/20">⚠️ ন্যূনতম উইথড্র ২০০০ টাকা। ২৪ ঘণ্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
+            
+            <div>
+                <label class="text-[11px] text-slate-400 block mb-1">পেমেন্ট মেথড</label>
+                <select id="paymentMethod" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-white text-xs focus:outline-none focus:border-emerald-500">
+                    <option value="Bkash">বিকাশ (Bkash)</option>
+                    <option value="Nagad">নগদ (Nagad)</option>
+                    <option value="Rocket">রকেট (Rocket)</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-[11px] text-slate-400 block mb-1">অ্যাকাউন্ট নম্বর</label>
+                <input type="text" id="accountNumber" placeholder="যেমন: 017xxxxxxxx" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-white text-xs focus:outline-none focus:border-emerald-500">
+            </div>
+
+            <div>
+                <label class="text-[11px] text-slate-400 block mb-1">পরিমাণ (টাকা)</label>
+                <input type="number" id="withdrawAmount" placeholder="ন্যূনতম ২০০০ ৳" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-white text-xs focus:outline-none focus:border-emerald-500">
+            </div>
+            
+            <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-blue-600/20 transition active:scale-95">উইথড্র রিকোয়েস্ট পাঠান</button>
         </div>
     </main>
 
-    <!-- Admin Panel Modal -->
-    <div id="adminModal" class="fixed inset-0 bg-black/80 hidden flex justify-center items-center p-4">
-        <div class="bg-slate-800 p-5 rounded-xl w-full max-w-lg max-h-[80vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-red-400">অ্যাডমিন প্যানেল</h3>
-                <button onclick="closeAdminModal()" class="text-slate-400 font-bold">✕</button>
-            </div>
-            
-            <div id="adminLoginBox">
-                <p class="text-sm mb-2">সিক্রেট পিন দিন:</p>
-                <input type="password" id="adminPinInput" placeholder="পিন কোড" class="w-full bg-slate-700 p-2 rounded mb-2 text-white">
-                <button onclick="verifyAdmin()" class="w-full bg-red-600 py-2 rounded font-bold">লগইন</button>
-            </div>
-
-            <div id="adminDashboard" class="hidden space-y-4">
-                <h4 class="font-semibold text-emerald-400">সকল ইউজারের লাইভ তালিকা ও কাজের হিসাব:</h4>
-                <div id="usersListContainer" class="space-y-2 text-sm">
-                    <!-- Firebase থেকে লাইভ ইউজারদের ডেটা এখানে লোড হবে -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase SDK Setup & App Logic -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, get, child, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-        // আপনার ফায়ারবেস কনফিগারেশন
-        const firebaseConfig = {
-          apiKey: "AIzaSyAqRsLPHrMdxsbjF4r9e1Mj5rz9O7VQFGA",
-          authDomain: "shuvo-earn-tech.firebaseapp.com",
-          databaseURL: "https://shuvo-earn-tech-default-rtdb.firebaseio.com",
-          projectId: "shuvo-earn-tech",
-          storageBucket: "shuvo-earn-tech.firebasestorage.app",
-          messagingSenderId: "565337643372",
-          appId: "1:565337643372:web:750f22b937db1dd804bb49",
-          measurementId: "G-HBF90MEQQS"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        // ইউজার আইডি জেনারেট বা টেলিগ্রাম থেকে নেওয়া
-        let userId = localStorage.getItem("shuvo_user_id");
-        if (!userId) {
-            userId = "user_" + Math.floor(Math.random() * 1000000);
-            localStorage.setItem("shuvo_user_id", userId);
-        }
-
-        document.getElementById("userIdDisplay").innerText = userId;
-        document.getElementById("welcomeText").innerText = "স্বাগতম, " + userId;
-
-        let userRef = ref(db, 'users/' + userId);
-
-        // ইউজারের ডেটা ইনিশিয়ালাইজ করা
-        get(userRef).then((snapshot) => {
-            if (!snapshot.exists()) {
-                set(userRef, {
-                    balance: 0,
-                    tasksCompleted: 0,
-                    t1: 0,
-                    t2: 0,
-                    t3: 0
-                });
-            } else {
-                let data = snapshot.val();
-                document.getElementById("userBalance").innerText = "৳ " + (data.balance || 0);
-            }
-        });
-
-        // লাইভ ব্যালেন্স সিঙ্ক করা
-        onValue(userRef, (snapshot) => {
-            if (snapshot.exists()) {
-                let data = snapshot.val();
-                document.getElementById("userBalance").innerText = "৳ " + (data.balance || 0);
-            }
-        });
-
-        // টাস্ক কমপ্লিট করার ফাংশন
-        window.completeTask = function(taskType, reward) {
-            get(userRef).then((snapshot) => {
-                let userData = snapshot.val() || { balance: 0, tasksCompleted: 0, t1: 0, t2: 0, t3: 0 };
-                
-                userData.balance += reward;
-                userData.tasksCompleted += 1;
-                userData[taskType] = (userData[taskType] || 0) + 1;
-
-                set(userRef, userData).then(() => {
-                    alert(`সফল! আপনি ${reward} টাকা পেয়েছেন।`);
-                });
-            });
-        }
-
-        // উইথড্র রিকোয়েস্ট ফাংশন
-        window.requestWithdraw = function() {
-            let amount = parseFloat(document.getElementById("withdrawAmount").value);
-            if (isNaN(amount) || amount < 2000) {
-                alert("সর্বনিম্ন ২০০০ টাকা উইথড্র করতে হবে!");
-                return;
-            }
-
-            get(userRef).then((snapshot) => {
-                let userData = snapshot.val();
-                if (userData.balance < amount) {
-                    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
-                    return;
-                }
-
-                userData.balance -= amount;
-                set(userRef, userData);
-
-                // উইথড্র রিকোয়েস্ট সেভ করা
-                let withdrawRef = ref(db, 'withdraws/' + Date.now());
-                set(withdrawRef, {
-                    userId: userId,
-                    amount: amount,
-                    status: "Pending",
-                    time: new Date().toLocaleString()
-                }).then(() => {
-                    alert("উইথড্র রিকোয়েস্ট সফল হয়েছে! ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
-                    document.getElementById("withdrawAmount").value = "";
-                });
-            });
-        }
-
-        // অ্যাডমিন প্যানেল ভেরিফিকেশন (পিন: 48499)
-        window.openAdminModal = function() {
-            document.getElementById("adminModal").classList.remove("hidden");
-        }
-        window.closeAdminModal = function() {
-            document.getElementById("adminModal").classList.add("hidden");
-        }
-
-        window.verifyAdmin = function() {
-            let pin = document.getElementById("adminPinInput").value;
-            if (pin === "48499") {
-                document.getElementById("adminLoginBox").classList.add("hidden");
-                document.getElementById("adminDashboard").classList.remove("hidden");
-                loadAdminData();
-            } else {
-                alert("ভুল পিন কোড!");
-            }
-        }
-
-        // অ্যাডমিন প্যানেলে লাইভ ইউজার ও উইথড্র লোড করা
-        function loadAdminData() {
-            let allUsersRef = ref(db, 'users');
-            onValue(allUsersRef, (snapshot) => {
-                let container = document.getElementById("usersListContainer");
-                container.innerHTML = "";
-                
-                if (snapshot.exists()) {
-                    snapshot.forEach((childSnapshot) => {
-                        let uId = childSnapshot.key;
-                        let uData = childSnapshot.val();
-                        
-                        let div = document.createElement("div");
-                        div.className = "bg-slate-700 p-2 rounded flex justify-between items-center";
-                        div.innerHTML = `
-                            <div>
-                                <p class="font-bold text-emerald-400">${uId}</p>
-                                <p class="text-xs text-slate-300">ব্যালেন্স: ৳${uData.balance} | মোট টাস্ক: ${uData.tasksCompleted}</p>
-                            </div>
-                        `;
-                        container.appendChild(div);
-                    });
-                } else {
-                    container.innerHTML = "<p>কোনো ইউজার পাওয়া যায়নি।</p>";
-                }
-            });
-        }
-    </script>
-</body>
-</html>
+    <!-- Admin Panel Modal (Bright Red Color Theme) -->
+    <div id="adminModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
+        <div class="bg-slate-900 border border-red-500/30 p-5 rounded-3xl w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl space-y-4">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="text-base font-extrabold text-red-500 flex items-center gap-1.5">🔒 অ্যাডমিন প্যানেল</h3>
+                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white font-bold bg-slate-800 w-8 h-8 rounded-full flex items-center
