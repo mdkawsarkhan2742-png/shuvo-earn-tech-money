@@ -10,250 +10,301 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f172a;
-            color: #f8fafc;
+            background-color: #f1f5f9;
+            color: #1e293b;
             margin: 0;
-            padding: 12px;
+            padding: 10px;
+            padding-bottom: 60px;
         }
         .container {
             max-width: 420px;
             margin: auto;
         }
-        .header-bar {
+        /* Top Hero Card */
+        .hero-card {
+            background: linear-gradient(135deg, #4f46e5, #3b82f6);
+            border-radius: 16px;
+            padding: 15px;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+            margin-bottom: 15px;
+        }
+        .hero-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #1e293b;
-            padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            margin-bottom: 12px;
         }
         .brand-title {
             font-size: 16px;
             font-weight: bold;
-            color: #38bdf8;
-            display: flex;
-            align-items: center;
-            gap: 5px;
         }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .balance-badge {
-            background: #0f172a;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-weight: bold;
-            color: #34d399;
-            border: 1px solid #334155;
-        }
-        .admin-btn {
-            background: #ef4444;
-            color: white;
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
             border: none;
-            padding: 6px 12px;
+            color: white;
+            padding: 5px 10px;
             border-radius: 8px;
-            font-weight: bold;
+            font-size: 11px;
             cursor: pointer;
         }
-        .welcome-card {
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #334155;
+        .notice-box {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 12px;
+            line-height: 1.4;
         }
-        .section-title {
-            font-size: 14px;
-            color: #94a3b8;
-            margin-bottom: 10px;
+        .balance-box {
+            background: white;
+            color: #1e293b;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .balance-box span {
+            font-size: 24px;
             font-weight: bold;
+            color: #2563eb;
         }
-        .task-card, .withdraw-card, .bonus-card {
-            background: #1e293b;
+        /* Task Card */
+        .card {
+            background: white;
+            border-radius: 14px;
             padding: 12px 15px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #334155;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border: 1px solid #e2e8f0;
         }
-        .task-info h4 {
-            margin: 0 0 4px 0;
+        .card-info h4 {
+            margin: 0 0 3px 0;
             font-size: 14px;
-            color: #f8fafc;
+            color: #0f172a;
         }
-        .task-info p {
-            margin: 0;
+        .card-info p {
+            margin: 0 0 6px 0;
             font-size: 11px;
-            color: #94a3b8;
+            color: #64748b;
+        }
+        .count-badge {
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+            display: inline-block;
         }
         .action-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        /* Bonus Card */
+        .bonus-card {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border: 2px dashed #cbd5e1;
+            text-align: center;
+        }
+        .bonus-btn {
             background: #10b981;
             color: white;
             border: none;
-            padding: 8px 14px;
+            padding: 9px;
+            width: 100%;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 13px;
+            margin-top: 8px;
         }
-        .bonus-btn {
-            background: #0ea5e9;
+        .bonus-btn.claimed {
+            background: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+        }
+        /* Big Buttons */
+        .big-btn-green {
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             border: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 12px;
+            padding: 12px;
             width: 100%;
-        }
-        .withdraw-box {
-            background: #1e293b;
-            padding: 15px;
             border-radius: 12px;
-            margin-top: 15px;
-            border: 1px solid #334155;
-        }
-        .input-field, .select-field {
-            width: 100%;
-            padding: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
             margin-bottom: 10px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            color: white;
-            border-radius: 8px;
-            box-sizing: border-box;
+            box-shadow: 0 3px 8px rgba(16, 185, 129, 0.3);
         }
-        .withdraw-submit-btn {
-            background: #3b82f6;
+        .big-btn-red {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
-            border-radius: 8px;
+            border-radius: 12px;
             font-weight: bold;
+            font-size: 14px;
             cursor: pointer;
+            box-shadow: 0 3px 8px rgba(239, 68, 68, 0.3);
         }
-        #timer-display {
-            text-align: center;
-            color: #f43f5e;
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        /* Modal for Admin */
-        #admin-modal {
+        /* Fullscreen Ad / Timer Overlay */
+        #ad-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            z-index: 1000;
-            overflow-y: auto;
+            background: #0f172a;
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
             padding: 20px;
             box-sizing: border-box;
         }
-        .modal-content {
-            background: #1e293b;
+        /* Bottom Nav */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; width: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 0;
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.05);
+            border-top: 1px solid #e2e8f0;
+        }
+        .nav-item {
+            text-align: center;
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        /* Modal */
+        #modal-bg {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .modal-box {
+            background: white;
+            color: #1e293b;
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 14px;
             max-width: 400px;
-            margin: 30px auto;
-            color: white;
-            border: 1px solid #334155;
+            margin: 20px auto;
+        }
+        .input-box {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Top Header Bar -->
-    <div class="header-bar">
-        <div class="brand-title">⚡ Shuvo Earn Tech</div>
-        <div class="header-right">
-            <div class="balance-badge">৳ <span id="user-balance">0.00</span></div>
-            <button class="admin-btn" onclick="checkAdmin()">Admin</button>
+    <!-- Top Hero Banner -->
+    <div class="hero-card">
+        <div class="hero-top">
+            <div class="brand-title">SHUVO EASY EARN</div>
+            <button class="logout-btn" onclick="location.reload()">🔄 রিফ্রেশ</button>
+        </div>
+        <div class="notice-box">
+            আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহ। সবাই বেশি বেশি কাজ করেন এবং বেশি বেশি ইনকাম করেন।
+        </div>
+        <div class="balance-box">
+            <div style="font-size: 11px; color: #64748b; margin-bottom: 2px;">আপনার মোট ব্যালেন্স</div>
+            ৳ <span id="user-balance">0.00</span>
         </div>
     </div>
 
-    <!-- Welcome Card -->
-    <div class="welcome-card">
-        <h3 style="margin: 0 0 5px 0; font-size: 15px; color: #f8fafc;">আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহ</h3>
-        <p style="margin: 0 0 8px 0; font-size: 12px; color: #cbd5e1; font-weight: bold;">সবাই মনোযোগ দিয়ে কাজ করেন।</p>
-        <p id="user-info" style="margin: 0; font-size: 11px; color: #64748b;">Connecting...</p>
-    </div>
-
-    <!-- Daily Bonus -->
-    <div class="bonus-card" style="display: block; text-align: center;">
-        <div style="margin-bottom: 8px; font-size: 13px; font-weight: bold; color: #38bdf8;">ডেইলি বোনাস (১০ টাকা)</div>
-        <button class="bonus-btn" onclick="claimDailyBonus()">Claim Daily Bonus</button>
-    </div>
-
-    <!-- Tasks Section -->
-    <div class="section-title">ডেইলি টাস্কসমূহ (৫০০ লিমিট)</div>
-    
-    <div class="task-card">
-        <div class="task-info">
-            <h4>টাস্ক ১ (অ্যাড ভিজিট)</h4>
-            <p>প্রতি টাস্কে ০.০৭ টাকা | বাকি: <span id="t1-count">500</span>/500</p>
+    <!-- Task 1 -->
+    <div class="card">
+        <div class="card-info">
+            <h4>🎯 প্রথম টাস্ক</h4>
+            <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
+            <div class="count-badge">সম্পন্ন: <span id="t1-done">0</span> / 500</div>
         </div>
         <button class="action-btn" onclick="startTask(1, 0.07)">কাজ করুন</button>
     </div>
 
-    <div class="task-card">
-        <div class="task-info">
-            <h4>টাস্ক ২ (ভিডিও টাস্ক)</h4>
-            <p>প্রতি টাস্কে ০.০৭ টাকা | বাকি: <span id="t2-count">500</span>/500</p>
+    <!-- Task 2 -->
+    <div class="card">
+        <div class="card-info">
+            <h4>🎯 দ্বিতীয় টাস্ক</h4>
+            <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
+            <div class="count-badge">সম্পন্ন: <span id="t2-done">0</span> / 500</div>
         </div>
         <button class="action-btn" onclick="startTask(2, 0.07)">কাজ করুন</button>
     </div>
 
-    <div class="task-card">
-        <div class="task-info">
-            <h4>টাস্ক ৩ (লিংক শেয়ার)</h4>
-            <p>প্রতি টাস্কে ০.০৭ টাকা | বাকি: <span id="t3-count">500</span>/500</p>
+    <!-- Task 3 -->
+    <div class="card">
+        <div class="card-info">
+            <h4>🎯 তৃতীয় টাস্ক</h4>
+            <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ৳ ০.০৭)</p>
+            <div class="count-badge">সম্পন্ন: <span id="t3-done">0</span> / 500</div>
         </div>
         <button class="action-btn" onclick="startTask(3, 0.07)">কাজ করুন</button>
     </div>
 
-    <p id="timer-display"></p>
+    <!-- Daily Bonus -->
+    <div class="bonus-card">
+        <div style="font-weight: bold; font-size: 14px; color: #d97706;">🎁 ডেইলি বোনাস</div>
+        <p style="font-size: 11px; color: #64748b; margin: 4px 0 8px 0;">প্রতিদিন একবার ফ্রি ১০ টাকা বোনাস নিন!</p>
+        <button id="bonus-btn-el" class="bonus-btn" onclick="claimDailyBonus()">১০ টাকা বোনাস क्লেইম করুন</button>
+    </div>
 
-    <!-- Withdraw Section -->
-    <div class="withdraw-box">
-        <div class="section-title" style="margin-bottom: 5px;">টাকা উত্তোলন (Withdraw)</div>
-        <p style="font-size: 11px; color: #facc15; margin-bottom: 10px;">⚠️ ন্যূনতম উইথড্র ২৫০০ টাকা। ২৪ ঘন্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
-        
-        <select id="withdraw-method" class="select-field">
-            <option value="Bkash">Bkash</option>
-            <option value="Nagad">Nagad</option>
-            <option value="Rocket">Rocket</option>
-        </select>
-        <input type="text" id="withdraw-number" placeholder="আপনার একাউন্ট নম্বর লিখুন" class="input-field">
-        <button class="withdraw-submit-btn" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+    <!-- Main Buttons -->
+    <button class="big-btn-green" onclick="openWithdrawModal()">💰 টাকা উত্তোলন (Withdraw)</button>
+    <button class="big-btn-red" onclick="openAdminModal()">🔒 অ্যাডমিন প্যানেল (গোপন)</button>
+</div>
+
+<!-- Fullscreen Ad / Timer Overlay -->
+<div id="ad-overlay">
+    <h2 style="color: #38bdf8; margin-bottom: 10px;">বিজ্ঞাপন চলছে...</h2>
+    <p style="font-size: 14px; color: #94a3b8; margin-bottom: 25px;">দয়া করে ১৫ সেকেন্ড অপেক্ষা করুন</p>
+    <div style="font-size: 48px; font-weight: bold; color: #f43f5e; background: #1e293b; width: 90px; height: 90px; line-height: 90px; border-radius: 50%; border: 3px solid #334155; margin: auto;" id="ad-timer">15</div>
+</div>
+
+<!-- Bottom Navigation Bar -->
+<div class="bottom-nav">
+    <div class="nav-item">🏠 হোম</div>
+</div>
+
+<!-- Modal Container (Withdraw & Admin) -->
+<div id="modal-bg">
+    <div class="modal-box" id="modal-body-content">
+        <!-- Dynamically loaded -->
     </div>
 </div>
 
-<!-- Admin Modal -->
-<div id="admin-modal">
-    <div class="modal-content">
-        <h3>Admin Panel</h3>
-        <div id="admin-login-area">
-            <input type="password" id="admin-pin" placeholder="Enter PIN (48499)" class="input-field">
-            <button class="action-btn" style="width:100%; padding:10px;" onclick="verifyAdmin()">Login</button>
-        </div>
-        <div id="admin-dashboard" style="display:none; max-height: 350px; overflow-y: auto;">
-            <button onclick="resetAllBalances()" style="background:#ef4444; color:white; border:none; padding:8px; width:100%; border-radius:6px; margin-bottom:10px; cursor:pointer; font-weight:bold;">Reset All Balances to 0</button>
-            <div id="admin-data-content"></div>
-        </div>
-        <button onclick="closeAdmin()" style="background:#64748b; color:white; border:none; padding:8px; width:100%; border-radius:6px; margin-top:10px; cursor:pointer;">Close</button>
-    </div>
-</div>
-
-<!-- Firebase & Script Logic -->
+<!-- Firebase & Logic Script -->
 <script>
     const firebaseConfig = {
         databaseURL: "https://shuvo-earn-tech-default-rtdb.asia-southeast1.firebasedatabase.app"
@@ -274,40 +325,52 @@
         userName = tg.initDataUnsafe.user.first_name || "User";
     }
 
-    document.getElementById("user-info").innerText = `ইউনিক আইডি: ${userId}`;
-
     const userRef = db.ref('users/' + userId);
     const globalTasksRef = db.ref('globalTasks');
     const withdrawsRef = db.ref('withdraws');
 
+    // Initialize User if new
     userRef.once('value', (snapshot) => {
         if (!snapshot.exists()) {
             userRef.set({
                 name: userName,
                 balance: 0,
                 lastBonusDate: "",
+                t1Done: 0,
+                t2Done: 0,
+                t3Done: 0,
                 joinedAt: Date.now()
             });
         }
     });
 
+    // Realtime Balance Listener
     userRef.child('balance').on('value', (snapshot) => {
         const balance = snapshot.val() || 0;
         document.getElementById("user-balance").innerText = balance.toFixed(2);
     });
 
-    globalTasksRef.on('value', (snapshot) => {
-        let tasks = snapshot.val() || { t1: 500, t2: 500, t3: 500 };
-        document.getElementById("t1-count").innerText = tasks.t1 !== undefined ? tasks.t1 : 500;
-        document.getElementById("t2-count").innerText = tasks.t2 !== undefined ? tasks.t2 : 500;
-        document.getElementById("t3-count").innerText = tasks.t3 !== undefined ? tasks.t3 : 500;
+    // Realtime Task Done Counters Listener
+    userRef.on('value', (snapshot) => {
+        let data = snapshot.val() || {};
+        document.getElementById("t1-done").innerText = data.t1Done || 0;
+        document.getElementById("t2-done").innerText = data.t2Done || 0;
+        document.getElementById("t3-done").innerText = data.t3Done || 0;
+
+        // Check Bonus Status for Today
+        let today = new Date().toLocaleDateString();
+        if (data.lastBonusDate === today) {
+            let btn = document.getElementById("bonus-btn-el");
+            btn.innerText = "আজকের বোনাস নেওয়া হয়েছে";
+            btn.classList.add("claimed");
+        }
     });
 
+    // Daily Bonus Function
     function claimDailyBonus() {
         let today = new Date().toLocaleDateString();
         userRef.child('lastBonusDate').once('value', (snapshot) => {
-            let lastBonus = snapshot.val();
-            if (lastBonus === today) {
+            if (snapshot.val() === today) {
                 alert("আপনি আজ ইতিমধ্যে ডেইলি বোনাস নিয়েছেন!");
                 return;
             }
@@ -323,6 +386,7 @@
         });
     }
 
+    // Task & Fullscreen 15s Ad Timer Function
     function startTask(taskNo, reward) {
         let taskKey = `t${taskNo}`;
         globalTasksRef.child(taskKey).once('value', (snapshot) => {
@@ -334,44 +398,66 @@
                 return;
             }
 
+            // Show Fullscreen Ad Overlay
+            let overlay = document.getElementById("ad-overlay");
+            let timerEl = document.getElementById("ad-timer");
+            overlay.style.display = "flex";
             let timeLeft = 15;
-            let timerDisplay = document.getElementById("timer-display");
-            timerDisplay.innerText = `টাস্ক ${taskNo} চলছে... অনুগ্রহ করে ${timeLeft} সেকেন্ড অপেক্ষা করুন`;
+            timerEl.innerText = timeLeft;
 
             let interval = setInterval(() => {
                 timeLeft--;
-                if (timeLeft > 0) {
-                    timerDisplay.innerText = `টাস্ক ${taskNo} চলছে... অনুগ্রহ করে ${timeLeft} সেকেন্ড অপেক্ষা করুন`;
-                } else {
+                timerEl.innerText = timeLeft;
+                if (timeLeft <= 0) {
                     clearInterval(interval);
-                    timerDisplay.innerText = `টাস্ক ${taskNo} সম্পন্ন হয়েছে! ${reward} টাকা যোগ হয়েছে।`;
-                    
-                    globalTasksRef.child(taskKey).set(remaining - 1);
+                    overlay.style.display = "none";
+
+                    // Update Global Task Limit and User Balance / Done Count
+                    globalTasksRef.child(taskKey).set(Math.max(0, remaining - 1));
 
                     userRef.child('balance').transaction((currentBalance) => {
                         return Number(((currentBalance || 0) + reward).toFixed(2));
-                    }, (error, committed) => {
-                        if (committed) {
-                            userRef.child('completedTasks').transaction((count) => (count || 0) + 1);
-                        }
                     });
+
+                    userRef.child(`t${taskNo}Done`).transaction((count) => (count || 0) + 1);
+                    
+                    alert(`অভিনন্দন! টাস্ক সফল হয়েছে এবং ${reward} টাকা যোগ হয়েছে।`);
                 }
             }, 1000);
         });
     }
 
-    function requestWithdraw() {
-        let method = document.getElementById("withdraw-method").value;
-        let number = document.getElementById("withdraw-number").value;
+    // Withdraw Modal
+    function openWithdrawModal() {
+        document.getElementById("modal-bg").style.display = "block";
+        document.getElementById("modal-body-content").innerHTML = `
+            <h3 style="margin-top:0; color:#1e293b;">টাকা উত্তোলন (Withdraw)</h3>
+            <p style="font-size:12px; color:#d97706; margin-bottom:12px;">⚠️ ন্যূনতম উইথড্র ২৫০০ টাকা। ২৪ ঘন্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
+            <label style="font-size:12px; font-weight:bold; color:#64748b;">মাধ্যম নির্বাচন করুন:</label>
+            <select id="w-method" class="input-box" style="margin-top:5px;">
+                <option value="Bkash">Bkash</option>
+                <option value="Nagad">Nagad</option>
+                <option value="Rocket">Rocket</option>
+            </select>
+            <label style="font-size:12px; font-weight:bold; color:#64748b;">একাউন্ট নম্বর:</label>
+            <input type="text" id="w-number" placeholder="আপনার বিকাশ/নগদ নম্বর দিন" class="input-box" style="margin-top:5px;">
+            <button onclick="submitWithdraw()" class="big-btn-green" style="padding:10px; margin-top:10px;">রিকোয়েস্ট পাঠান</button>
+            <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border:none; padding:10px; width:100%; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:5px;">বন্ধ করুন</button>
+        `;
+    }
+
+    function submitWithdraw() {
+        let method = document.getElementById("w-method").value;
+        let number = document.getElementById("w-number").value;
         if (!number) {
-            alert("দয়া করে আপনার একাউন্ট নম্বরটি লিখুন!");
+            alert("দয়া করে আপনার নম্বরটি লিখুন!");
             return;
         }
-        
+
         userRef.once('value', (snapshot) => {
-            let userData = snapshot.val() || {};
-            let balance = userData.balance || 0;
-            
+            let data = snapshot.val() || {};
+            let balance = data.balance || 0;
+
             if (balance < 2500) {
                 alert("উইথড্র করার জন্য ন্যূনতম ২৫০০ টাকা প্রয়োজন!");
                 return;
@@ -388,80 +474,89 @@
                         status: "Pending",
                         time: new Date().toLocaleString()
                     });
-                    alert("উইথড্র রিকোয়েস্ট সফলভাবে পাঠানো হয়েছে! ২৪ ঘণ্টার মধ্যে পেমেন্ট দেওয়া হবে।");
-                    document.getElementById("withdraw-number").value = "";
+                    alert("উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!");
+                    closeModal();
                 }
             });
         });
     }
 
-    function checkAdmin() {
-        document.getElementById("admin-modal").style.display = "block";
+    // Admin Modal
+    function openAdminModal() {
+        document.getElementById("modal-bg").style.display = "block";
+        document.getElementById("modal-body-content").innerHTML = `
+            <h3 style="margin-top:0; color:#1e293b;">অ্যাডমিন প্যানেল</h3>
+            <input type="password" id="admin-pin-input" placeholder="পিন নম্বর লিখুন (48499)" class="input-box">
+            <button onclick="verifyAdminPin()" class="action-btn" style="width:100%; padding:10px; margin-bottom:10px;">লগইন করুন</button>
+            <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border:none; padding:10px; width:100%; border-radius:8px; font-weight:bold; cursor:pointer;">বন্ধ করুন</button>
+        `;
     }
 
-    function closeAdmin() {
-        document.getElementById("admin-modal").style.display = "none";
-    }
-
-    function verifyAdmin() {
-        const pin = document.getElementById("admin-pin").value;
+    function verifyAdminPin() {
+        let pin = document.getElementById("admin-pin-input").value;
         if (pin === "48499") {
-            document.getElementById("admin-login-area").style.display = "none";
-            document.getElementById("admin-dashboard").style.display = "block";
-            loadAdminData();
+            loadAdminDashboard();
         } else {
             alert("ভুল পিন দিয়েছেন!");
         }
     }
 
-    function loadAdminData() {
+    function loadAdminDashboard() {
+        let content = `
+            <h3 style="color:#2563eb; margin-top:0;">অ্যাডমিন ড্যাশবোর্ড</h3>
+            <button onclick="resetAllBalances()" style="background:#ef4444; color:white; border:none; padding:8px; width:100%; border-radius:8px; font-weight:bold; cursor:pointer; margin-bottom:12px;">🔄 সব ইউজারের ব্যালেন্স জিরো করুন</button>
+            <div id="admin-dynamic-data" style="max-height: 300px; overflow-y: auto; font-size:12px;">লোড হচ্ছে...</div>
+            <button onclick="closeModal()" style="background:#64748b; color:white; border:none; padding:8px; width:100%; border-radius:8px; font-weight:bold; cursor:pointer; margin-top:12px;">বন্ধ করুন</button>
+        `;
+        document.getElementById("modal-body-content").innerHTML = content;
+
         db.ref('users').on('value', (userSnap) => {
-            let users = userSnap.val();
+            let users = userSnap.val() || {};
             let totalMembers = 0;
-            let userHtml = "<h4 style='color:#38bdf8;'>মেম্বারদের তালিকা:</h4><ul style='padding-left:15px; font-size:12px;'>";
+            let userHtml = "<h4 style='color:#0f172a; border-bottom:1px solid #e2e8f0; padding-bottom:4px;'>মেম্বারদের তালিকা:</h4>";
             for (let id in users) {
                 totalMembers++;
-                let name = users[id].name || 'N/A';
-                let bal = users[id].balance || 0;
-                let tasks = users[id].completedTasks || 0;
-                userHtml += `<li style='margin-bottom:6px;'><b>${name}</b><br>ব্যালেন্স: ${bal.toFixed(2)} ৳ | টাস্ক সম্পন্ন: ${tasks}</li>`;
+                let u = users[id];
+                userHtml += `<div style="background:#f8fafc; padding:6px; border-radius:6px; margin-bottom:5px;"><b>${u.name || 'User'}</b> | ব্যালেন্স: ${(u.balance || 0).toFixed(2)} ৳</div>`;
             }
-            userHtml += `</ul><p><b>মোট মেম্বার:</b> ${totalMembers}</p>`;
 
             withdrawsRef.on('value', (wdSnap) => {
-                let wds = wdSnap.val();
-                let wdHtml = "<h4 style='color:#facc15;'>উইথড্র রিকোয়েস্টসমূহ:</h4><ul style='padding-left:15px; font-size:12px;'>";
+                let wds = wdSnap.val() || {};
+                let wdHtml = "<h4 style='color:#d97706; border-bottom:1px solid #e2e8f0; padding-bottom:4px; margin-top:15px;'>উইথড্র রিকোয়েস্টসমূহ:</h4>";
                 for (let wid in wds) {
                     let w = wds[wid];
-                    wdHtml += `<li style='margin-bottom:8px; border-bottom:1px solid #334155; padding-bottom:5px;'><b>${w.name}</b> (${w.method}: ${w.number})<br>পরিমাণ: ${w.amount} ৳ [স্ট্যাটাস: ${w.status}] `;
-                    if(w.status === "Pending") {
-                        wdHtml += `<br><button onclick="approveWithdraw('${wid}')" style='background:#10b981; color:#white; border:none; padding:3px 8px; border-radius:4px; cursor:pointer; margin-top:3px;'>Approve</button>`;
+                    wdHtml += `<div style="background:#fffbeb; padding:6px; border-radius:6px; margin-bottom:5px; border:1px solid #fef3c7;"><b>${w.name}</b> (${w.method}: ${w.number}) - ${w.amount} ৳ [${w.status}] `;
+                    if (w.status === "Pending") {
+                        wdHtml += `<button onclick="approveWd('${wid}')" style="background:#10b981; color:white; border:none; padding:2px 6px; border-radius:4px; cursor:pointer; float:right;">Approve</button>`;
                     }
-                    wdHtml += `</li>`;
+                    wdHtml += `</div>`;
                 }
-                wdHtml += `</ul>`;
 
-                document.getElementById("admin-data-content").innerHTML = userHtml + wdHtml;
+                document.getElementById("admin-dynamic-data").innerHTML = `<p><b>মোট মেম্বার:</b> ${totalMembers}</p>` + userHtml + wdHtml;
             });
         });
     }
 
-    function approveWithdraw(wid) {
+    function approveWd(wid) {
         withdrawsRef.child(wid).update({ status: "Approved" }, () => {
             alert("উইথড্র সফলভাবে এপ্রুভ করা হয়েছে!");
         });
     }
 
     function resetAllBalances() {
-        if(confirm("আপনি কি সত্যিই সব ইউজারের ব্যালেন্স জিরো (0) করে দিতে চান?")) {
+        if(confirm("আপনি কি সত্যিই সকল ইউজারের ব্যালেন্স জিরো করে দিতে চান?")) {
             db.ref('users').once('value', (snapshot) => {
-                let users = snapshot.val();
+                let users = snapshot.val() || {};
                 for(let id in users) {
                     db.ref('users/' + id + '/balance').set(0);
                 }
                 alert("সকল ইউজারের ব্যালেন্স সফলভাবে জিরো করা হয়েছে!");
             });
         }
+    }
+
+    function closeModal() {
+        document.getElementById("modal-bg").style.display = "none";
     }
 </script>
 
