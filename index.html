@@ -99,37 +99,37 @@
     <div class="container">
         <div id="home-section" class="section active">
             
-            <!-- প্রথম টাস্ক -->
+            <!-- প্রথম টাস্ক (৫০০টি লিমিট, ১৫ সেকেন্ড, ৭ পয়সা) -->
             <div class="task-card">
                 <div class="task-info">
                     <h3><i class="fas fa-ad" style="color:#2575fc;"></i> প্রথম টাস্ক</h3>
                     <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
                     <span class="task-count">সম্পন্ন: <span id="t1-count">0</span> / 500</span>
                 </div>
-                <button class="btn-sm" id="btn-t1" onclick="startTask(1, 'অ্যাড দেখুন')">কাজ করুন</button>
+                <button class="btn-sm" id="btn-t1" onclick="startTask(1, 'প্রথম টাস্ক')">কাজ করুন</button>
             </div>
 
-            <!-- দ্বিতীয় টাস্ক -->
+            <!-- দ্বিতীয় টাস্ক (৫০০টি লিমিট, ১৫ সেকেন্ড, ৭ পয়সা) -->
             <div class="task-card">
                 <div class="task-info">
                     <h3><i class="fas fa-ad" style="color:#6a11cb;"></i> দ্বিতীয় টাস্ক</h3>
                     <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
                     <span class="task-count">সম্পন্ন: <span id="t2-count">0</span> / 500</span>
                 </div>
-                <button class="btn-sm" id="btn-t2" onclick="startTask(2, 'অ্যাড দেখুন')">কাজ করুন</button>
+                <button class="btn-sm" id="btn-t2" onclick="startTask(2, 'দ্বিতীয় টাস্ক')">কাজ করুন</button>
             </div>
 
-            <!-- তৃতীয় টাস্ক -->
+            <!-- তৃতীয় টাস্ক (৫০০টি লিমিট, ১৫ সেকেন্ড, ৭ পয়সা) -->
             <div class="task-card">
                 <div class="task-info">
                     <h3><i class="fas fa-video" style="color:#e74c3c;"></i> তৃতীয় টাস্ক</h3>
                     <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ৳ ০.০৭)</p>
                     <span class="task-count">সম্পন্ন: <span id="t3-count">0</span> / 500</span>
                 </div>
-                <button class="btn-sm" id="btn-t3" onclick="startTask(3, 'ভিডিও দেখুন')">কাজ করুন</button>
+                <button class="btn-sm" id="btn-t3" onclick="startTask(3, 'তৃতীয় টাস্ক')">কাজ করুন</button>
             </div>
 
-            <!-- ডেইলি বোনাস -->
+            <!-- ডেইলি বোনাস (১০ টাকা) -->
             <div class="card" style="text-align: center; margin-top: 15px; border: 2px dashed #f39c12;">
                 <h3 style="color: #e67e22;"><i class="fas fa-gift"></i> ডেইলি বোনাস</h3>
                 <p style="font-size: 13px; color: #555; margin: 6px 0;">প্রতিদিন একবার ফ্রি ১০ টাকা বোনাস নিন!</p>
@@ -147,9 +147,9 @@
     </div>
 
     <script>
-        const REWARD_PER_TASK = 0.07; // প্রতি টাস্কে ৭ পয়সা (0.07 টাকা)
+        const REWARD_PER_TASK = 0.07; // প্রতিটি টাস্কে ঠিক ৭ পয়সা (0.07 টাকা)
         const DAILY_BONUS_AMOUNT = 10.00; // ডেইলি বোনাস ১০ টাকা
-        const MAX_LIMIT = 500;
+        const MAX_LIMIT = 500; // প্রতি টাস্কে ৫০০টি লিমিট
 
         window.onload = function() {
             const currentUser = localStorage.getItem('shuvo_logged_user');
@@ -171,7 +171,7 @@
             let user = users.find(u => u.email === email);
             if (!user) return;
 
-            // নতুন দিন হলে টাস্ক কাউন্ট রিসেট হবে
+            // নতুন দিন হলে সব টাস্ক কাউন্ট রিসেট হবে
             const today = getTodayDate();
             if (user.lastDate !== today) {
                 user.t1 = 0;
@@ -181,7 +181,7 @@
                 saveUser(user);
             }
 
-            document.getElementById('user-balance').innerText = (user.balance || 0).toFixed(2);
+            document.getElementById('user-balance').innerText = Number(user.balance || 0).toFixed(2);
             document.getElementById('t1-count').innerText = user.t1 || 0;
             document.getElementById('t2-count').innerText = user.t2 || 0;
             document.getElementById('t3-count').innerText = user.t3 || 0;
@@ -241,9 +241,9 @@
                     clearInterval(interval);
                     modal.style.display = 'none';
 
-                    // ব্যালেন্স ও টাস্ক সংখ্যা যোগ করা (৭ পয়সা বা 0.07)
+                    // ব্যালেন্স ও টাস্ক সংখ্যা নিখুঁতভাবে যোগ করা (৭ পয়সা বা 0.07)
                     user[key] = (user[key] || 0) + 1;
-                    user.balance = (user.balance || 0) + REWARD_PER_TASK;
+                    user.balance = Number(((user.balance || 0) + REWARD_PER_TASK).toFixed(2));
                     saveUser(user);
                     loadUserData();
 
@@ -270,7 +270,7 @@
                 show_12278984().catch(e => console.log('Ad loading:', e));
             }
 
-            user.balance = (user.balance || 0) + DAILY_BONUS_AMOUNT;
+            user.balance = Number(((user.balance || 0) + DAILY_BONUS_AMOUNT).toFixed(2));
             user.lastBonusDate = today;
             saveUser(user);
             loadUserData();
@@ -312,41 +312,4 @@
         // লগইন ফাংশন
         function loginUser() {
             const email = document.getElementById('auth-email').value.trim();
-            const pass = document.getElementById('auth-pass').value.trim();
-            const msg = document.getElementById('auth-msg');
-
-            if (!email || !pass) {
-                msg.style.color = 'red';
-                msg.innerText = 'দয়া করে ইমেইল এবং পাসওয়ার্ড দিন!';
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            const user = users.find(u => u.email === email && u.pass === pass);
-
-            if (user) {
-                localStorage.setItem('shuvo_logged_user', email);
-                msg.style.color = 'green';
-                msg.innerText = 'লগইন সফল হয়েছে!';
-                setTimeout(() => {
-                    document.getElementById('auth-screen').style.display = 'none';
-                    loadUserData();
-                }, 800);
-            } else {
-                msg.style.color = 'red';
-                msg.innerText = 'ইমেইল অথবা পাসওয়ার্ড সঠিক নয়!';
-            }
-        }
-
-        // লগআউট ফাংশন
-        function logoutUser() {
-            localStorage.removeItem('shuvo_logged_user');
-            document.getElementById('auth-screen').style.display = 'flex';
-            document.getElementById('auth-email').value = '';
-            document.getElementById('auth-pass').value = '';
-            document.getElementById('auth-refer').value = '';
-            document.getElementById('auth-msg').innerText = '';
-        }
-    </script>
-</body>
-</html>
+            const pass = document.getElementById('auth-pass').
