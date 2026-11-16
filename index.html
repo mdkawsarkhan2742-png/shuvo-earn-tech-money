@@ -1,574 +1,243 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <script src='//libtl.com/sdk.js' data-zone='12278984' data-sdk='show_12278984'></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHUVO EASY EARN MONEY</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f0f2f5; color: #333; padding-bottom: 70px; }
-        
-        /* Header */
-        .header { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; padding: 20px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .header-top h2 { font-size: 18px; font-weight: bold; }
-        
-        /* Welcome Notice */
-        .welcome-notice { background: rgba(255, 255, 255, 0.2); padding: 8px 12px; border-radius: 10px; font-size: 12px; text-align: center; margin-bottom: 12px; line-height: 1.4; }
-
-        .balance-card { background: rgba(255, 255, 255, 0.15); padding: 15px; border-radius: 15px; backdrop-filter: blur(5px); text-align: center; }
-        .balance-card p { font-size: 13px; opacity: 0.9; }
-        .balance-card h1 { font-size: 32px; margin: 5px 0; }
-
-        /* Container & Sections */
-        .container { padding: 15px; max-width: 500px; margin: 0 auto; }
-        .section { display: none; animation: fadeIn 0.3s; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Task & Card Lists */
-        .task-card { background: white; padding: 18px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .task-info h3 { font-size: 16px; color: #222; margin-bottom: 4px; }
-        .task-info p { font-size: 13px; color: #666; }
-        .task-count { display: inline-block; background: #e8f0fe; color: #2575fc; padding: 3px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; margin-top: 5px; }
-
-        /* Buttons */
-        .btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background: #2575fc; color: white; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .btn-sm { padding: 10px 16px; border: none; border-radius: 10px; background: #2575fc; color: white; font-size: 14px; font-weight: bold; cursor: pointer; }
-        .btn-sm:disabled, .btn:disabled { background: #ccc; cursor: not-allowed; }
-        .btn-success { background: #2ecc71; }
-        .btn-bonus { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); color: white; }
-        .btn-admin { background: #e74c3c; margin-top: 15px; }
-        .btn-withdraw { background: linear-gradient(135deg, #00b09b 0%, #96c93d 100%); color: white; margin-top: 15px; }
-
-        /* Inputs & Select */
-        input, select { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; background: #fff; }
-
-        /* Timer Modal */
-        #timer-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; }
-        .modal-box { background: white; padding: 25px; border-radius: 18px; text-align: center; width: 100%; max-width: 340px; }
-        .timer-circle { width: 80px; height: 80px; border-radius: 50%; border: 5px solid #2575fc; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; color: #2575fc; margin: 15px auto; }
-
-        /* Admin Panel & Withdraw Modal */
-        .custom-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 400; display: none; padding: 20px; overflow-y: auto; }
-        .modal-content-box { background: white; padding: 20px; border-radius: 15px; max-width: 450px; margin: 30px auto; }
-        .user-row, .req-row { background: #f9f9f9; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #2575fc; font-size: 13px; }
-
-        /* Bottom Nav */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); z-index: 100; }
-        .nav-item { text-align: center; color: #777; font-size: 12px; cursor: pointer; }
-        .nav-item.active { color: #2575fc; font-weight: bold; }
-        .nav-item i { font-size: 18px; display: block; margin-bottom: 3px; }
-
-        /* Auth Screen */
-        #auth-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f0f2f5; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 15px; }
-    </style>
+    <title>Shuvo Earn Tech Money - Telegram Mini App</title>
+    <!-- Tailwind CSS for modern UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
-<body>
+<body class="bg-slate-900 text-white min-h-screen flex flex-col">
 
-    <!-- Login / Register Screen -->
-    <div id="auth-screen">
-        <div class="card" style="width: 100%; max-width: 400px;">
-            <h2 style="text-align: center; color: #2575fc; margin-bottom: 15px;">SHUVO EASY EARN MONEY</h2>
-            <input type="email" id="auth-email" placeholder="আপনার ইমেইল দিন">
-            <input type="password" id="auth-pass" placeholder="পাসওয়ার্ড দিন">
-            <input type="text" id="auth-refer" placeholder="রেফার কোড (ঐচ্ছিক)">
-            <button class="btn" onclick="loginUser()">লগইন করুন</button>
-            <button class="btn btn-success" onclick="registerUser()">নতুন অ্যাকাউন্ট খুলুন</button>
-            <p id="auth-msg" style="color: red; font-size: 13px; text-align: center; margin-top: 10px;"></p>
+    <!-- Header / Navbar -->
+    <header class="bg-slate-800 p-4 shadow-md flex justify-between items-center">
+        <h1 class="text-lg font-bold text-emerald-400">⚡ Shuvo Earn Tech</h1>
+        <div class="flex items-center gap-2">
+            <span id="userBalance" class="bg-slate-700 px-3 py-1 rounded-full text-sm font-semibold">৳ 0.00</span>
+            <button onclick="openAdminModal()" class="bg-red-600 px-2 py-1 rounded text-xs">Admin</button>
         </div>
-    </div>
-
-    <!-- Timer Modal -->
-    <div id="timer-modal">
-        <div class="modal-box">
-            <h3 id="modal-title" style="color: #2575fc;">বিজ্ঞাপন চলছে...</h3>
-            <p style="font-size: 13px; color: #666; margin-top: 5px;">বোনাস পেতে ১৫ সেকেন্ড অপেক্ষা করুন</p>
-            <div class="timer-circle" id="countdown-text">15</div>
-            <p style="font-size: 12px; color: #e74c3c;">টাইমার শেষ না হওয়া পর্যন্ত পেজ কাটবেন না</p>
-        </div>
-    </div>
-
-    <!-- Withdraw Modal (User View) -->
-    <div id="withdraw-modal" class="custom-modal">
-        <div class="modal-content-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="color: #00b09b;"><i class="fas fa-wallet"></i> টাকা উত্তোলন (Withdraw)</h3>
-                <button onclick="closeWithdrawModal()" style="background: #ccc; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">বন্ধ করুন</button>
-            </div>
-            <p style="font-size: 12px; color: #e67e22; margin-bottom: 10px; font-weight: bold; background: #fff8e1; padding: 8px; border-radius: 6px;">
-                ⚠️ সর্বনিম্ন ২০০০ টাকা হলে উইথড্র করতে পারবেন। সর্বোচ্চ ২৪ ঘণ্টার মধ্যে পেমেন্ট কমপ্লিট ও সাকসেসফুল হয়ে যাবে।
-            </p>
-            <label style="font-size: 13px; font-weight: bold;">পেমেন্ট মেথড সিলেক্ট করুন:</label>
-            <select id="withdraw-method">
-                <option value="Bkash">বিকাশ (Bkash)</option>
-                <option value="Nagad">নগদ (Nagad)</option>
-                <option value="Rocket">রকেট (Rocket)</option>
-            </select>
-            <input type="text" id="withdraw-number" placeholder="আপনার পেমেন্ট নম্বর দিন (যেমন: 017xxxxxxxx)">
-            <input type="number" id="withdraw-amount" placeholder="টাকার পরিমাণ (সর্বনিম্ন ২০০০)">
-            <button class="btn btn-success" onclick="submitWithdrawRequest()">উইথড্র রিকোয়েস্ট পাঠান</button>
-        </div>
-    </div>
-
-    <!-- Admin Panel Modal -->
-    <div id="admin-modal" class="custom-modal">
-        <div class="modal-content-box">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="color: #e74c3c;"><i class="fas fa-user-shield"></i> অ্যাডমিন প্যানেল</h3>
-                <button onclick="closeAdminPanel()" style="background: #ccc; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">বন্ধ করুন</button>
-            </div>
-            
-            <h4 style="color: #2575fc; margin-bottom: 8px; border-bottom: 2px solid #eee; padding-bottom: 4px;">📥 উইথড্র রিকোয়েস্ট সমূহ:</h4>
-            <div id="admin-withdraw-requests" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;">
-                <!-- উইথড্র রিকোয়েস্ট লিস্ট -->
-            </div>
-
-            <h4 style="color: #2575fc; margin-bottom: 8px; border-bottom: 2px solid #eee; padding-bottom: 4px;">👥 রেজিস্টার্ড ইউজার লিস্ট:</h4>
-            <div id="admin-user-list" style="max-height: 200px; overflow-y: auto;">
-                <!-- ইউজার লিস্ট -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <div class="header">
-        <div class="header-top">
-            <h2>SHUVO EASY EARN</h2>
-            <button onclick="logoutUser()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 8px; cursor: pointer;">
-                <i class="fas fa-sign-out-alt"></i> লগআউট
-            </button>
-        </div>
-        
-        <!-- Welcome Notice -->
-        <div class="welcome-notice">
-            আসসালামু আলাইকুম ওয়ারাহমাতুল্লাহ। সবাই বেশি বেশি কাজ করেন এবং বেশি বেশি ইনকাম করেন।
-        </div>
-
-        <div class="balance-card">
-            <p>আপনার মোট ব্যালেন্স</p>
-            <h1>৳ <span id="user-balance">0.00</span></h1>
-        </div>
-    </div>
+    </header>
 
     <!-- Main Container -->
-    <div class="container">
-        <div id="home-section" class="section active">
+    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-20">
+        
+        <!-- User Welcome Section -->
+        <div class="bg-slate-800 p-4 rounded-xl shadow mb-4">
+            <h2 id="welcomeText" class="text-xl font-bold">স্বাগতম, ইউজার!</h2>
+            <p class="text-xs text-slate-400 mt-1">ইউনিক আইডি: <span id="userIdDisplay">-</span></p>
+        </div>
+
+        <!-- Task Section -->
+        <div class="space-y-3">
+            <h3 class="font-semibold text-emerald-300">ডেইলি টাস্কসমূহ (৫০০ লিমি트)</h3>
             
-            <!-- প্রথম টাস্ক -->
-            <div class="task-card">
-                <div class="task-info">
-                    <h3><i class="fas fa-ad" style="color:#2575fc;"></i> প্রথম টাস্ক</h3>
-                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
-                    <span class="task-count">সম্পন্ন: <span id="t1-count">0</span> / 500</span>
+            <div class="bg-slate-800 p-3 rounded-xl flex justify-between items-center">
+                <div>
+                    <h4 class="font-medium">টাস্ক ১ (অ্যাড ভিজিট)</h4>
+                    <p class="text-xs text-slate-400">প্রতি টাস্কে ৫ টাকা</p>
                 </div>
-                <button class="btn-sm" id="btn-t1" onclick="startTask(1, 'প্রথম টাস্ক')">কাজ করুন</button>
+                <button onclick="completeTask('t1', 5)" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-bold">কাজ করুন</button>
             </div>
 
-            <!-- দ্বিতীয় টাস্ক -->
-            <div class="task-card">
-                <div class="task-info">
-                    <h3><i class="fas fa-ad" style="color:#6a11cb;"></i> দ্বিতীয় টাস্ক</h3>
-                    <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
-                    <span class="task-count">সম্পন্ন: <span id="t2-count">0</span> / 500</span>
+            <div class="bg-slate-800 p-3 rounded-xl flex justify-between items-center">
+                <div>
+                    <h4 class="font-medium">টাস্ক ২ (ভিডিও টাস্ক)</h4>
+                    <p class="text-xs text-slate-400">প্রতি টাস্কে ১০ টাকা</p>
                 </div>
-                <button class="btn-sm" id="btn-t2" onclick="startTask(2, 'দ্বিতীয় টাস্ক')">কাজ করুন</button>
+                <button onclick="completeTask('t2', 10)" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-bold">কাজ করুন</button>
             </div>
 
-            <!-- তৃতীয় টাস্ক -->
-            <div class="task-card">
-                <div class="task-info">
-                    <h3><i class="fas fa-video" style="color:#e74c3c;"></i> তৃতীয় টাস্ক</h3>
-                    <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ৳ ০.০৭)</p>
-                    <span class="task-count">সম্পন্ন: <span id="t3-count">0</span> / 500</span>
+            <div class="bg-slate-800 p-3 rounded-xl flex justify-between items-center">
+                <div>
+                    <h4 class="font-medium">টাস্ক ৩ (লিংক শেয়ার)</h4>
+                    <p class="text-xs text-slate-400">প্রতি টাস্কে ১৫ টাকা</p>
                 </div>
-                <button class="btn-sm" id="btn-t3" onclick="startTask(3, 'তৃতীয় টাস্ক')">কাজ করুন</button>
+                <button onclick="completeTask('t3', 15)" class="bg-emerald-600 hover:bg-emerald-500 px-4 py-2 rounded-lg text-sm font-bold">কাজ করুন</button>
+            </div>
+        </div>
+
+        <!-- Withdrawal Section -->
+        <div class="mt-6 bg-slate-800 p-4 rounded-xl">
+            <h3 class="font-semibold text-emerald-300 mb-2">টাকা উত্তোলন (Withdraw)</h3>
+            <p class="text-xs text-yellow-400 mb-3">⚠️ ন্যূনতম উইথড্র ২০০০ টাকা। ২৪ ঘণ্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
+            <input type="number" id="withdrawAmount" placeholder="পরিমাণ লিখুন (৳)" class="w-full bg-slate-700 p-2 rounded mb-2 text-white border border-slate-600">
+            <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-500 py-2 rounded font-bold">উইথড্র রিকোয়েস্ট পাঠান</button>
+        </div>
+    </main>
+
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="fixed inset-0 bg-black/80 hidden flex justify-center items-center p-4">
+        <div class="bg-slate-800 p-5 rounded-xl w-full max-w-lg max-h-[80vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold text-red-400">অ্যাডমিন প্যানেল</h3>
+                <button onclick="closeAdminModal()" class="text-slate-400 font-bold">✕</button>
+            </div>
+            
+            <div id="adminLoginBox">
+                <p class="text-sm mb-2">সিক্রেট পিন দিন:</p>
+                <input type="password" id="adminPinInput" placeholder="পিন কোড" class="w-full bg-slate-700 p-2 rounded mb-2 text-white">
+                <button onclick="verifyAdmin()" class="w-full bg-red-600 py-2 rounded font-bold">লগইন</button>
             </div>
 
-            <!-- ডেইলি বোনাস -->
-            <div class="card" style="text-align: center; margin-top: 15px; border: 2px dashed #f39c12;">
-                <h3 style="color: #e67e22;"><i class="fas fa-gift"></i> ডেইলি বোনাস</h3>
-                <p style="font-size: 13px; color: #555; margin: 6px 0;">প্রতিদিন একবার ফ্রি ১০ টাকা বোনাস নিন!</p>
-                <button class="btn btn-bonus" id="btn-bonus" onclick="claimDailyBonus()">৳ ১০.০০ বোনাস নিন</button>
+            <div id="adminDashboard" class="hidden space-y-4">
+                <h4 class="font-semibold text-emerald-400">সকল ইউজারের লাইভ তালিকা ও কাজের হিসাব:</h4>
+                <div id="usersListContainer" class="space-y-2 text-sm">
+                    <!-- Firebase থেকে লাইভ ইউজারদের ডেটা এখানে লোড হবে -->
+                </div>
             </div>
-
-            <!-- Withdraw Button -->
-            <button class="btn btn-withdraw" onclick="openWithdrawModal()"><i class="fas fa-hand-holding-usd"></i> টাকা উত্তোলন (Withdraw)</button>
-
-            <!-- Admin Panel Trigger Button -->
-            <button class="btn btn-admin" onclick="openAdminPanel()"><i class="fas fa-lock"></i> অ্যাডমিন প্যানেল (গোপন)</button>
-
         </div>
     </div>
 
-    <!-- Bottom Nav -->
-    <div class="bottom-nav">
-        <div class="nav-item active">
-            <i class="fas fa-home"></i> হোম
-        </div>
-    </div>
+    <!-- Firebase SDK Setup & App Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, get, child, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <script>
-        const REWARD_PER_TASK = 0.07; // প্রতি টাস্কে ৭ পয়সা (0.07)
-        const DAILY_BONUS_AMOUNT = 10.00; // ডেইলি বোনাস ১০ টাকা
-        const MAX_LIMIT = 500;
-        const ADMIN_PIN = "48499"; // আপনার গোপন পিন
-
-        window.onload = function() {
-            const currentUser = localStorage.getItem('shuvo_logged_user');
-            if (currentUser) {
-                document.getElementById('auth-screen').style.display = 'none';
-                loadUserData();
-            }
+        // আপনার ফায়ারবেস কনফিগারেশন
+        const firebaseConfig = {
+          apiKey: "AIzaSyAqRsLPHrMdxsbjF4r9e1Mj5rz9O7VQFGA",
+          authDomain: "shuvo-earn-tech.firebaseapp.com",
+          databaseURL: "https://shuvo-earn-tech-default-rtdb.firebaseio.com",
+          projectId: "shuvo-earn-tech",
+          storageBucket: "shuvo-earn-tech.firebasestorage.app",
+          messagingSenderId: "565337643372",
+          appId: "1:565337643372:web:750f22b937db1dd804bb49",
+          measurementId: "G-HBF90MEQQS"
         };
 
-        function getTodayDate() {
-            return new Date().toISOString().split('T')[0];
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // ইউজার আইডি জেনারেট বা টেলিগ্রাম থেকে নেওয়া
+        let userId = localStorage.getItem("shuvo_user_id");
+        if (!userId) {
+            userId = "user_" + Math.floor(Math.random() * 1000000);
+            localStorage.setItem("shuvo_user_id", userId);
         }
 
-        function loadUserData() {
-            const email = localStorage.getItem('shuvo_logged_user');
-            if (!email) return;
+        document.getElementById("userIdDisplay").innerText = userId;
+        document.getElementById("welcomeText").innerText = "স্বাগতম, " + userId;
 
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            let user = users.find(u => u.email === email);
-            if (!user) return;
+        let userRef = ref(db, 'users/' + userId);
 
-            const today = getTodayDate();
-            if (user.lastDate !== today) {
-                user.t1 = 0;
-                user.t2 = 0;
-                user.t3 = 0;
-                user.lastDate = today;
-                saveUser(user);
-            }
-
-            document.getElementById('user-balance').innerText = Number(user.balance || 0).toFixed(2);
-            document.getElementById('t1-count').innerText = user.t1 || 0;
-            document.getElementById('t2-count').innerText = user.t2 || 0;
-            document.getElementById('t3-count').innerText = user.t3 || 0;
-
-            if ((user.t1 || 0) >= MAX_LIMIT) {
-                document.getElementById('btn-t1').disabled = true;
+        // ইউজারের ডেটা ইনিশিয়ালাইজ করা
+        get(userRef).then((snapshot) => {
+            if (!snapshot.exists()) {
+                set(userRef, {
+                    balance: 0,
+                    tasksCompleted: 0,
+                    t1: 0,
+                    t2: 0,
+                    t3: 0
+                });
             } else {
-                document.getElementById('btn-t1').disabled = false;
+                let data = snapshot.val();
+                document.getElementById("userBalance").innerText = "৳ " + (data.balance || 0);
             }
+        });
 
-            if ((user.t2 || 0) >= MAX_LIMIT) {
-                document.getElementById('btn-t2').disabled = true;
-            } else {
-                document.getElementById('btn-t2').disabled = false;
+        // লাইভ ব্যালেন্স সিঙ্ক করা
+        onValue(userRef, (snapshot) => {
+            if (snapshot.exists()) {
+                let data = snapshot.val();
+                document.getElementById("userBalance").innerText = "৳ " + (data.balance || 0);
             }
+        });
 
-            if ((user.t3 || 0) >= MAX_LIMIT) {
-                document.getElementById('btn-t3').disabled = true;
-            } else {
-                document.getElementById('btn-t3').disabled = false;
-            }
+        // টাস্ক কমপ্লিট করার ফাংশন
+        window.completeTask = function(taskType, reward) {
+            get(userRef).then((snapshot) => {
+                let userData = snapshot.val() || { balance: 0, tasksCompleted: 0, t1: 0, t2: 0, t3: 0 };
+                
+                userData.balance += reward;
+                userData.tasksCompleted += 1;
+                userData[taskType] = (userData[taskType] || 0) + 1;
 
-            const bonusBtn = document.getElementById('btn-bonus');
-            if (user.lastBonusDate === today) {
-                bonusBtn.disabled = true;
-                bonusBtn.innerText = 'আজকের বোনাস নেওয়া হয়েছে';
-            } else {
-                bonusBtn.disabled = false;
-                bonusBtn.innerText = '৳ ১০.০০ বোনাস নিন';
-            }
-        }
-
-        function saveUser(updatedUser) {
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            const index = users.findIndex(u => u.email === updatedUser.email);
-            if (index !== -1) {
-                users[index] = updatedUser;
-                localStorage.setItem('shuvo_users', JSON.stringify(users));
-            }
-        }
-
-        // টাস্ক ও ১৫ সেকেন্ড টাইমার ফাংশন
-        function startTask(taskNum, titleText) {
-            const email = localStorage.getItem('shuvo_logged_user');
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            let user = users.find(u => u.email === email);
-            if (!user) return;
-
-            const key = 't' + taskNum;
-            if ((user[key] || 0) >= MAX_LIMIT) {
-                alert('আজকের ৫০০টি টাস্ক পূর্ণ হয়েছে!');
-                return;
-            }
-
-            if (typeof show_12278984 === 'function') {
-                show_12278984().catch(e => console.log('Ad loading:', e));
-            }
-
-            const modal = document.getElementById('timer-modal');
-            const countdownEl = document.getElementById('countdown-text');
-            document.getElementById('modal-title').innerText = titleText + ' চলছে...';
-            
-            let seconds = 15;
-            countdownEl.innerText = seconds;
-            modal.style.display = 'flex';
-
-            const interval = setInterval(() => {
-                seconds--;
-                countdownEl.innerText = seconds;
-
-                if (seconds <= 0) {
-                    clearInterval(interval);
-                    modal.style.display = 'none';
-
-                    user[key] = (user[key] || 0) + 1;
-                    user.balance = Number(((user.balance || 0) + REWARD_PER_TASK).toFixed(2));
-                    saveUser(user);
-                    loadUserData();
-
-                    alert('অভিনন্দন! আপনার অ্যাকাউন্টে ৳ ' + REWARD_PER_TASK.toFixed(2) + ' যোগ হয়েছে।');
-                }
-            }, 1000);
-        }
-
-        // ডেইলি বোনাস ফাংশন (১০ টাকা)
-        function claimDailyBonus() {
-            const email = localStorage.getItem('shuvo_logged_user');
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            let user = users.find(u => u.email === email);
-            if (!user) return;
-
-            const today = getTodayDate();
-            if (user.lastBonusDate === today) {
-                alert('আপনি আজকের ডেইলি বোনাস ইতিমধ্যে নিয়েছেন!');
-                return;
-            }
-
-            if (typeof show_12278984 === 'function') {
-                show_12278984().catch(e => console.log('Ad loading:', e));
-            }
-
-            user.balance = Number(((user.balance || 0) + DAILY_BONUS_AMOUNT).toFixed(2));
-            user.lastBonusDate = today;
-            saveUser(user);
-            loadUserData();
-
-            alert('অভিনন্দন! আপনি ১০ টাকা ডেইলি বোনাস পেয়েছেন।');
-        }
-
-        // উইথড্র মোডাল ফাংশন
-        function openWithdrawModal() {
-            document.getElementById('withdraw-modal').style.display = 'block';
-        }
-
-        function closeWithdrawModal() {
-            document.getElementById('withdraw-modal').style.display = 'none';
-        }
-
-        function submitWithdrawRequest() {
-            const email = localStorage.getItem('shuvo_logged_user');
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            let user = users.find(u => u.email === email);
-            if (!user) return;
-
-            const method = document.getElementById('withdraw-method').value;
-            const number = document.getElementById('withdraw-number').value.trim();
-            const amount = parseFloat(document.getElementById('withdraw-amount').value);
-
-            if (!number) {
-                alert('দয়া করে আপনার পেমেন্ট নম্বর দিন!');
-                return;
-            }
-
-            if (isNaN(amount) || amount < 2000) {
-                alert('সর্বনিম্ন ২০০০ টাকা উইথড্র করতে হবে! ২০০০ টাকার কম উইথড্র করা যাবে না।');
-                return;
-            }
-
-            if (amount > user.balance) {
-                alert('আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!');
-                return;
-            }
-
-            // উইথড্র রিকোয়েস্ট সংরক্ষণ
-            let requests = JSON.parse(localStorage.getItem('shuvo_withdraw_requests')) || [];
-            requests.push({
-                email: email,
-                method: method,
-                number: number,
-                amount: amount,
-                date: new Date().toLocaleString()
+                set(userRef, userData).then(() => {
+                    alert(`সফল! আপনি ${reward} টাকা পেয়েছেন।`);
+                });
             });
-            localStorage.setItem('shuvo_withdraw_requests', JSON.stringify(requests));
-
-            // সাময়িকভাবে ব্যালেন্স থেকে মাইনাস করে রাখা
-            user.balance = Number((user.balance - amount).toFixed(2));
-            saveUser(user);
-            loadUserData();
-
-            alert('আপনার উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে! সর্বোচ্চ ২৪ ঘণ্টার মধ্যে পেমেন্ট কমপ্লিট হয়ে যাবে।');
-            closeWithdrawModal();
-            document.getElementById('withdraw-number').value = '';
-            document.getElementById('withdraw-amount').value = '';
         }
 
-        // অ্যাডমিন প্যানেল ওপেন করার ফাংশন
-        function openAdminPanel() {
-            const enteredPin = prompt("দয়া করে অ্যাডমিন পিন কোড দিন:");
-            if (enteredPin !== ADMIN_PIN) {
-                alert("ভুল পিন কোড দেওয়া হয়েছে!");
+        // উইথড্র রিকোয়েস্ট ফাংশন
+        window.requestWithdraw = function() {
+            let amount = parseFloat(document.getElementById("withdrawAmount").value);
+            if (isNaN(amount) || amount < 2000) {
+                alert("সর্বনিম্ন ২০০০ টাকা উইথড্র করতে হবে!");
                 return;
             }
 
-            loadAdminData();
-            document.getElementById('admin-modal').style.display = 'block';
-        }
+            get(userRef).then((snapshot) => {
+                let userData = snapshot.val();
+                if (userData.balance < amount) {
+                    alert("আপনার অ্যাকাউন্টে পর্যাপ্ত ব্যালেন্স নেই!");
+                    return;
+                }
 
-        function loadAdminData() {
-            // উইথড্র রিকোয়েস্ট লোড
-            let requests = JSON.parse(localStorage.getItem('shuvo_withdraw_requests')) || [];
-            const reqContainer = document.getElementById('admin-withdraw-requests');
-            reqContainer.innerHTML = '';
+                userData.balance -= amount;
+                set(userRef, userData);
 
-            if (requests.length === 0) {
-                reqContainer.innerHTML = '<p style="text-align:center; color:#777; font-size:12px;">কোনো উইথড্র রিকোয়েস্ট নেই।</p>';
-            } else {
-                requests.forEach((req, index) => {
-                    reqContainer.innerHTML += `
-                        <div class="req-row">
-                            <b>ইউজার:</b> ${req.email}<br>
-                            <b>মেথড:</b> ${req.method} | <b>নম্বর:</b> ${req.number}<br>
-                            <b>পরিমাণ:</b> ৳ ${req.amount.toFixed(2)}<br>
-                            <span style="font-size:11px; color:#555;">সময়: ${req.date}</span><br>
-                            <button onclick="acceptWithdrawRequest(${index})" style="background:#2ecc71; color:white; border:none; padding:6px 12px; border-radius:5px; margin-top:6px; cursor:pointer; font-weight:bold;"><i class="fas fa-check-circle"></i> পেমেন্ট এক্সেপ্ট ও কনফার্ম করুন (সাকসেস)</button>
-                        </div>
-                    `;
+                // উইথড্র রিকোয়েস্ট সেভ করা
+                let withdrawRef = ref(db, 'withdraws/' + Date.now());
+                set(withdrawRef, {
+                    userId: userId,
+                    amount: amount,
+                    status: "Pending",
+                    time: new Date().toLocaleString()
+                }).then(() => {
+                    alert("উইথড্র রিকোয়েস্ট সফল হয়েছে! ২৪ ঘণ্টার মধ্যে পেমেন্ট পাবেন।");
+                    document.getElementById("withdrawAmount").value = "";
                 });
-            }
-
-            // ইউজার লিস্ট লোড
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            const listContainer = document.getElementById('admin-user-list');
-            listContainer.innerHTML = '';
-
-            if (users.length === 0) {
-                listContainer.innerHTML = '<p style="text-align:center; color:#777; font-size:12px;">কোনো ইউজার পাওয়া যায়নি।</p>';
-            } else {
-                users.forEach(u => {
-                    listContainer.innerHTML += `
-                        <div class="user-row">
-                            <b>ইমেইল:</b> ${u.email}<br>
-                            <b>অবশিষ্ট ব্যালেন্স:</b> ৳ ${Number(u.balance || 0).toFixed(2)}<br>
-                            <b>টাস্ক সম্পন্ন:</b> T1: ${u.t1 || 0}, T2: ${u.t2 || 0}, T3: ${u.t3 || 0}<br>
-                            <button onclick="clearUserBalance('${u.email}')" style="background:#e74c3c; color:white; border:none; padding:4px 8px; border-radius:4px; margin-top:5px; cursor:pointer;">ব্যালেন্স জিরো করুন</button>
-                        </div>
-                    `;
-                });
-            }
+            });
         }
 
-        function closeAdminPanel() {
-            document.getElementById('admin-modal').style.display = 'none';
-            loadUserData();
+        // অ্যাডমিন প্যানেল ভেরিফিকেশন (পিন: 48499)
+        window.openAdminModal = function() {
+            document.getElementById("adminModal").classList.remove("hidden");
+        }
+        window.closeAdminModal = function() {
+            document.getElementById("adminModal").classList.add("hidden");
         }
 
-        // উইথড্র রিকোয়েস্ট এক্সেপ্ট করার ফাংশন
-        function acceptWithdrawRequest(index) {
-            if (!confirm('আপনি কি এই পেমেন্ট রিকোয়েস্টটি এক্সেপ্ট ও কনফার্ম (সাকসেস) করতে চান?')) return;
-
-            let requests = JSON.parse(localStorage.getItem('shuvo_withdraw_requests')) || [];
-            requests.splice(index, 1); // রিকোয়েস্ট লিস্ট থেকে মুছে ফেলা
-            localStorage.setItem('shuvo_withdraw_requests', JSON.stringify(requests));
-
-            alert('উইথড্র সফলভাবে এক্সেপ্ট ও কনফার্ম করা হয়েছে!');
-            loadAdminData();
-        }
-
-        // সরাসরি ইউজারের ব্যালেন্স জিরো করার ফাংশন
-        function clearUserBalance(email) {
-            if (!confirm(email + ' এর ব্যালেন্স জিরো করতে চান?')) return;
-
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            let user = users.find(u => u.email === email);
-            if (user) {
-                user.balance = 0.00;
-                user.t1 = 0;
-                user.t2 = 0;
-                user.t3 = 0;
-                saveUser(user);
-                alert('সফলভাবে ব্যালেন্স জিরো করা হয়েছে!');
+        window.verifyAdmin = function() {
+            let pin = document.getElementById("adminPinInput").value;
+            if (pin === "48499") {
+                document.getElementById("adminLoginBox").classList.add("hidden");
+                document.getElementById("adminDashboard").classList.remove("hidden");
                 loadAdminData();
-            }
-        }
-
-        // রেজিস্ট্রেশন ফাংশন
-        function registerUser() {
-            const email = document.getElementById('auth-email').value.trim();
-            const pass = document.getElementById('auth-pass').value.trim();
-            const msg = document.getElementById('auth-msg');
-
-            if (!email || !pass) {
-                msg.style.color = 'red';
-                msg.innerText = 'দয়া করে ইমেইল এবং পাসওয়ার্ড দিন!';
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            if (users.find(u => u.email === email)) {
-                msg.style.color = 'red';
-                msg.innerText = 'এই ইমেইল দিয়ে ইতোমধ্যে অ্যাকাউন্ট রয়েছে!';
-                return;
-            }
-
-            users.push({ email: email, pass: pass, balance: 0, t1: 0, t2: 0, t3: 0, lastDate: getTodayDate(), lastBonusDate: '' });
-            localStorage.setItem('shuvo_users', JSON.stringify(users));
-            localStorage.setItem('shuvo_logged_user', email);
-
-            msg.style.color = 'green';
-            msg.innerText = 'অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে!';
-            setTimeout(() => {
-                document.getElementById('auth-screen').style.display = 'none';
-                loadUserData();
-            }, 800);
-        }
-
-        // লগইন ফাংশন
-        function loginUser() {
-            const email = document.getElementById('auth-email').value.trim();
-            const pass = document.getElementById('auth-pass').value.trim();
-            const msg = document.getElementById('auth-msg');
-
-            if (!email || !pass) {
-                msg.style.color = 'red';
-                msg.innerText = 'দয়া করে ইমেইল এবং পাসওয়ার্ড দিন!';
-                return;
-            }
-
-            let users = JSON.parse(localStorage.getItem('shuvo_users')) || [];
-            const user = users.find(u => u.email === email && u.pass === pass);
-
-            if (user) {
-                localStorage.setItem('shuvo_logged_user', email);
-                msg.style.color = 'green';
-                msg.innerText = 'লগইন সফল হয়েছে!';
-                setTimeout(() => {
-                    document.getElementById('auth-screen').style.display = 'none';
-                    loadUserData();
-                }, 800);
             } else {
-                msg.style.color = 'red';
-                msg.innerText = 'ইমেইল অথবা পাসওয়ার্ড সঠিক নয়!';
+                alert("ভুল পিন কোড!");
             }
         }
 
-        // লগআউট ফাংশন
-        function logoutUser() {
-            localStorage.removeItem('shuvo_logged_user');
-            document.getElementById('auth-screen').style.display = 'flex';
-            document.getElementById('auth-email').value = '';
-            document.getElementById('auth-pass').value = '';
-            document.getElementById('auth-refer').value = '';
-            document.getElementById('auth-msg').innerText = '';
+        // অ্যাডমিন প্যানেলে লাইভ ইউজার ও উইথড্র লোড করা
+        function loadAdminData() {
+            let allUsersRef = ref(db, 'users');
+            onValue(allUsersRef, (snapshot) => {
+                let container = document.getElementById("usersListContainer");
+                container.innerHTML = "";
+                
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        let uId = childSnapshot.key;
+                        let uData = childSnapshot.val();
+                        
+                        let div = document.createElement("div");
+                        div.className = "bg-slate-700 p-2 rounded flex justify-between items-center";
+                        div.innerHTML = `
+                            <div>
+                                <p class="font-bold text-emerald-400">${uId}</p>
+                                <p class="text-xs text-slate-300">ব্যালেন্স: ৳${uData.balance} | মোট টাস্ক: ${uData.tasksCompleted}</p>
+                            </div>
+                        `;
+                        container.appendChild(div);
+                    });
+                } else {
+                    container.innerHTML = "<p>কোনো ইউজার পাওয়া যায়নি।</p>";
+                }
+            });
         }
     </script>
 </body>
