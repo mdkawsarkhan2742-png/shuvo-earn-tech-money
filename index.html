@@ -3,130 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shuvo Earn Tech Money - Telegram Mini App</title>
-    <!-- Tailwind CSS for modern UI -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Telegram Web App SDK -->
+    <title>Shuvo Earn Tech - প্রিমিয়াম আর্নিং প্যানেল</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-</head>
-<body class="bg-slate-950 text-white min-h-screen flex flex-col font-sans">
-
-    <!-- Header / Navbar -->
-    <header class="bg-slate-900 border-b border-slate-800 p-4 shadow-lg flex justify-between items-center sticky top-0 z-40">
-        <h1 class="text-base font-extrabold text-emerald-400 flex items-center gap-1">⚡ Shuvo Earn</h1>
-        <div class="flex items-center gap-2">
-            <span id="userBalance" class="bg-slate-800 border border-slate-700 px-3 py-1 rounded-full text-xs font-bold text-emerald-300 shadow-inner">৳ 0.00</span>
-            <button onclick="openAdminModal()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-lg text-xs font-bold shadow-md transition">Admin</button>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="flex-1 p-4 max-w-md mx-auto w-full pb-24 space-y-4">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #090d16; color: #fff; margin: 0; padding: 15px; text-align: center; }
+        .card { background: #131c31; padding: 18px; border-radius: 14px; margin-bottom: 15px; box-shadow: 0 6px 12px rgba(0,0,0,0.4); border: 1px solid #1e293b; }
+        .welcome-msg { background: linear-gradient(135deg, #1e293b, #0f172a); color: #38bdf8; font-size: 15px; font-weight: bold; padding: 12px; border-radius: 10px; margin-bottom: 15px; border-left: 4px solid #38bdf8; }
         
-        <!-- Top Notice & Welcome Section -->
-        <div class="bg-gradient-to-br from-slate-900 to-slate-800 border border-slate-800 p-4 rounded-2xl shadow-xl text-center relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-1 h-full bg-emerald-500"></div>
-            <p class="text-[11px] font-bold text-yellow-400 tracking-wider uppercase mb-1">📢 বিশেষ ঘোষণা</p>
-            <h2 class="text-xs font-bold text-slate-100">আসসালামু আলাইকুম, সকলে ভালো করে কাজ করবেন।</h2>
-            <div class="mt-3 pt-2 border-t border-slate-800/80 flex justify-between text-[11px] text-slate-400">
-                <span>আইডি: <span id="userIdDisplay" class="font-bold text-slate-200">-</span></span>
-                <span>আজকের কাজ: <span id="totalTodayTasks" class="font-bold text-emerald-400">0</span>/1500</span>
-            </div>
+        /* আলাদা আলাদা টাস্কের ভিন্ন রঙ */
+        .task-btn-1 { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; }
+        .task-btn-2 { background: linear-gradient(135deg, #10b981, #047857); color: white; }
+        .task-btn-3 { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: white; }
+        
+        /* ডেইলি বোনাসের আলাদা রঙ */
+        .bonus-btn { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        
+        /* উইথড্র বাটন */
+        .withdraw-btn { background: linear-gradient(135deg, #ec4899, #be185d); color: white; }
+
+        /* অ্যাডমিন প্যানেল বাটন */
+        .admin-btn { background: linear-gradient(135deg, #64748b, #475569); color: white; }
+
+        button { border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; margin: 6px 0; width: 100%; max-width: 320px; font-size: 15px; transition: 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        button:active { transform: scale(0.98); }
+
+        input, select { padding: 12px; border-radius: 10px; border: 1px solid #334155; background: #0f172a; color: #fff; width: 85%; max-width: 300px; margin-bottom: 12px; text-align: center; font-size: 14px; }
+        
+        /* পেমেন্ট লোগো স্টাইল */
+        .payment-logos { display: flex; justify-content: center; gap: 10px; margin-bottom: 10px; font-size: 13px; font-weight: bold; }
+        .logo-bKash { background: #e2136e; padding: 5px 10px; border-radius: 6px; color: white; }
+        .logo-Nagad { background: #f6921e; padding: 5px 10px; border-radius: 6px; color: black; }
+        .logo-Rocket { background: #8c349b; padding: 5px 10px; border-radius: 6px; color: white; }
+
+        /* অ্যাডমিন প্যানেল আলাদা ডিজাইন */
+        #admin-panel { background: #1a102f; border: 1px dashed #a855f7; }
+        .hidden { display: none; }
+        .success { color: #22c55e; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h2>Shuvo Earn Tech</h2>
+    <!-- আপনার নির্দেশমতো বোটের নামের নিচে সালাম ও উৎসাহমূলক বার্তা -->
+    <div class="welcome-msg">আসসালামু আলাইকুম, সকলে ভালোভাবে কাজ করেন, বেশি বেশি ইনকাম করুন।</div>
+
+    <div id="user-info" class="card">
+        <p>ইউজার আইডি: <span id="display-uid" class="success">লোড হচ্ছে...</span></p>
+        <p>মেইন ব্যালেন্স: ৳<span id="display-balance">0.00</span></p>
+        <p>মোট সম্পন্ন টাস্ক: <span id="display-ads">0</span> টি</p>
+    </div>
+
+    <!-- টাস্ক ও বোনাস সেকশন (ভিন্ন রঙের টাস্ক বাটন) -->
+    <div class="card">
+        <h3>আর্নিং টাস্ক ও বোনাস</h3>
+        
+        <button class="task-btn-1" onclick="startTask('টাস্ক ১ (১৫ সেকেন্ড)', 5)">টাস্ক ১: ১৫ সেকেন্ডের অ্যাড দেখুন (৳৫)</button>
+        <p id="timer-1" class="hidden">টাস্ক ১ চলছে... <span id="count-1">15</span> সেকেন্ড</p>
+
+        <button class="task-btn-2" onclick="startTask('টাস্ক ২ (ভিজিট)', 8)">টাস্ক ২: ওয়েবসাইট ভিজিট টাস্ক (৳৮)</button>
+        <p id="timer-2" class="hidden">টাস্ক ২ চলছে... <span id="count-2">10</span> সেকেন্ড</p>
+
+        <button class="task-btn-3" onclick="startTask('টাস্ক ৩ (সোশ্যাল)', 10)">টাস্ক ৩: টেলিগ্রাম চ্যানেল জয়েন (৳১০)</button>
+        <p id="timer-3" class="hidden">টাস্ক ৩ যাচাই হচ্ছে...</p>
+
+        <button class="bonus-btn" onclick="claimBonus()">🎁 ডেইলি বোনাস ক্লেম করুন (৳২০)</button>
+    </div>
+
+    <!-- উইথড্র সেকশন (ন্যূনতম ২০০০ টাকা ও পেমেন্ট লোগো) -->
+    <div class="card">
+        <h3>উইথড্র (টাকা উত্তোলন)</h3>
+        <div class="payment-logos">
+            <span class="logo-bKash">বিকাশ</span>
+            <span class="logo-Nagad">নগদ</span>
+            <span class="logo-Rocket">রকেট</span>
         </div>
+        <p style="color: #f43f5e; font-size: 13px;">⚠️ সর্বনিম্ন উইথড্র পরিমাণ: ৳২০০০</p>
+        
+        <select id="payment-method">
+            <option value="bKash">বিকাশ (bKash)</option>
+            <option value="Nagad">নগদ (Nagad)</option>
+            <option value="Rocket">রকেট (Rocket)</option>
+        </select>
+        <br>
+        <input type="number" id="withdraw-amount" placeholder="পরিমাণ লিখুন (সর্বনিম্ন ২০০০)">
+        <br>
+        <input type="text" id="withdraw-account" placeholder="আপনার পেমেন্ট নম্বর">
+        <br>
+        <button class="withdraw-btn" onclick="requestWithdraw()">উইথড্র রিকোয়েস্ট পাঠান</button>
+    </div>
 
-        <!-- Bonus Claim Section (Orange Color) -->
-        <div class="bg-slate-900 border border-orange-500/30 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
-            <div class="absolute left-0 top-0 w-1.5 h-full bg-orange-500"></div>
-            <div class="pl-2">
-                <h4 class="font-bold text-sm text-orange-400">🎁 ডেইলি বোনাস ক্লিম</h4>
-                <p class="text-[11px] text-slate-400">প্রতি ২৪ ঘণ্টায় একবার ফ্রি বোনাস নিন</p>
-            </div>
-            <button onclick="claimBonus()" class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-orange-500/20 transition active:scale-95">ক্লিম করুন</button>
-        </div>
+    <!-- অ্যাডমিন প্যানেল বাটন -->
+    <div class="card">
+        <h3>অ্যাডমিন কন্ট্রোল</h3>
+        <input type="password" id="admin-pin" placeholder="সিক্রেট পিন দিন">
+        <br>
+        <button class="admin-btn" onclick="loginAdmin()">অ্যাডমিন প্যানেল লগইন (পিন: 48499)</button>
+    </div>
 
-        <!-- Task Section (Different Unique Colors) -->
-        <div class="space-y-3">
-            <h3 class="font-bold text-xs text-slate-400 uppercase tracking-wider px-1">ডেইলি টাস্কসমূহ (১৫ সে. • ৭ পয়সা)</h3>
-            
-            <!-- Task 1: Green (সবুজ) -->
-            <div class="bg-slate-900 border border-emerald-500/20 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
-                <div class="absolute left-0 top-0 w-1.5 h-full bg-emerald-500"></div>
-                <div class="pl-2">
-                    <h4 class="font-bold text-sm text-emerald-400">টাস্ক ১ (অ্যাড ভিজিট)</h4>
-                    <p class="text-[11px] text-slate-400">৳০.০৭ | বাকি: <span id="t1Count">500</span>/500</p>
-                </div>
-                <button onclick="startAdTask('t1', 0.07)" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-emerald-600/20 transition active:scale-95">কাজ করুন</button>
-            </div>
+    <!-- অ্যাডমিন ড্যাশবোর্ড ও মিটার (আলাদা ডিজাইন) -->
+    <div id="admin-panel" class="card hidden">
+        <h3 style="color: #a855f7;">⚡ অ্যাডমিন কন্ট্রোল মিটার ড্যাশবোর্ড</h3>
+        <p>মোট রেজিস্টার্ড ইউজার: <span id="admin-total-users" class="success">0</span> জন</p>
+        <hr style="border-color: #334155;">
+        <div id="admin-user-list" style="text-align: left; font-size: 13px; max-height: 220px; overflow-y: auto;"></div>
+        <button onclick="closeAdmin()" class="admin-btn" style="background: #ef4444; margin-top: 15px;">অ্যাডমিন লগআউট</button>
+    </div>
 
-            <!-- Task 2: Blue (নীল) -->
-            <div class="bg-slate-900 border border-blue-500/20 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
-                <div class="absolute left-0 top-0 w-1.5 h-full bg-blue-500"></div>
-                <div class="pl-2">
-                    <h4 class="font-bold text-sm text-blue-400">টাস্ক ২ (ভিডিও টাস্ক)</h4>
-                    <p class="text-[11px] text-slate-400">৳০.০৭ | বাকি: <span id="t2Count">500</span>/500</p>
-                </div>
-                <button onclick="startAdTask('t2', 0.07)" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-blue-600/20 transition active:scale-95">কাজ করুন</button>
-            </div>
+<script>
+    // ফায়ারবেস কনফিগারেশন
+    const firebaseConfig = {
+        databaseURL: "https://shuvo-earn-tech-default-rtdb.asia-southeast1.firebasedatabase.app"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
 
-            <!-- Task 3: Red (লাল) -->
-            <div class="bg-slate-900 border border-red-500/20 p-3.5 rounded-2xl shadow-lg flex justify-between items-center relative overflow-hidden">
-                <div class="absolute left-0 top-0 w-1.5 h-full bg-red-500"></div>
-                <div class="pl-2">
-                    <h4 class="font-bold text-sm text-red-400">টাস্ক ৩ (লিংক শেয়ার)</h4>
-                    <p class="text-[11px] text-slate-400">৳০.০৭ | বাকি: <span id="t3Count">500</span>/500</p>
-                </div>
-                <button onclick="startAdTask('t3', 0.07)" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-xl text-xs font-bold shadow-lg shadow-red-600/20 transition active:scale-95">কাজ করুন</button>
-            </div>
-        </div>
+    // টেলিগ্রাম ইউজার ডিটেক্ট করা
+    let tg = window.Telegram.WebApp;
+    tg.expand();
+    let userId = tg.initDataUnsafe?.user?.id ? "user_" + tg.initDataUnsafe.user.id : "user_guest_" + Math.floor(Math.random()*1000);
+    document.getElementById("display-uid").innerText = userId;
 
-        <!-- Ad Timer / View Modal (15 Seconds) -->
-        <div id="adModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-3xl w-full max-w-sm text-center space-y-4 shadow-2xl">
-                <h3 class="text-base font-extrabold text-emerald-400">📺 বিজ্ঞাপন লোড হচ্ছে...</h3>
-                <p class="text-xs text-slate-400">অনুগ্রহ করে ১৫ সেকেন্ড অপেক্ষা করুন।</p>
-                
-                <div class="my-4 bg-slate-950 py-4 rounded-2xl border border-slate-800">
-                    <span id="timerCountdown" class="text-5xl font-black text-yellow-400">15</span>
-                    <p class="text-[11px] text-slate-400 mt-1">সেকেন্ড বাকি আছে</p>
-                </div>
+    let userRef = db.ref("users/" + userId);
 
-                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                    <div id="progressBar" class="bg-emerald-500 h-full w-full transition-all duration-1000"></div>
-                </div>
-            </div>
-        </div>
+    // রিয়েল-টাইম ডাটা সিঙ্ক
+    userRef.on("value", (snapshot) => {
+        let data = snapshot.val();
+        if (data) {
+            document.getElementById("display-balance").innerText = data.balance || 0;
+            document.getElementById("display-ads").innerText = data.adsWatched || 0;
+        } else {
+            userRef.set({ balance: 0, adsWatched: 0, account: "" });
+        }
+    });
 
-        <!-- Withdrawal Section with Bkash, Nagad, Rocket -->
-        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl space-y-3">
-            <h3 class="font-bold text-sm text-emerald-400 flex items-center gap-1.5">💸 টাকা উত্তোলন (Withdraw)</h3>
-            <p class="text-[11px] text-yellow-400/90 bg-yellow-500/10 p-2 rounded-xl border border-yellow-500/20">⚠️ ন্যূনতম উইথড্র ২০০০ টাকা। ২৪ ঘণ্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
-            
-            <div>
-                <label class="text-[11px] text-slate-400 block mb-1">পেমেন্ট মেথড</label>
-                <select id="paymentMethod" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-white text-xs focus:outline-none focus:border-emerald-500">
-                    <option value="Bkash">বিকাশ (Bkash)</option>
-                    <option value="Nagad">নগদ (Nagad)</option>
-                    <option value="Rocket">রকেট (Rocket)</option>
-                </select>
-            </div>
+    // টাস্ক সিস্টেম (আলাদা কাজের জন্য)
+    function startTask(taskName, reward) {
+        userRef.transaction((currentData) => {
+            if (currentData) {
+                currentData.balance = (currentData.balance || 0) + reward;
+                currentData.adsWatched = (currentData.adsWatched || 0) + 1;
+            }
+            return currentData;
+        });
+        alert(`সফল! ${taskName} সম্পন্ন হয়েছে। অ্যাকাউন্টে ৳${reward} যোগ হয়েছে।`);
+    }
 
-            <div>
-                <label class="text-[11px] text-slate-400 block mb-1">অ্যাকাউন্ট নম্বর</label>
-                <input type="text" id="accountNumber" placeholder="যেমন: 017xxxxxxxx" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-white text-xs focus:outline-none focus:border-emerald-500">
-            </div>
+    // ডেইলি বোনাস সিস্টেম
+    function claimBonus() {
+        let today = new Date().toDateString();
+        db.ref("users/" + userId + "/lastBonus").once("value", (snapshot) => {
+            if (snapshot.val() === today) {
+                alert("আজকে ইতিমধ্যে ডেইলি বোনাস নেওয়া হয়েছে!");
+            } else {
+                userRef.transaction((currentData) => {
+                    if (currentData) {
+                        currentData.balance = (currentData.balance || 0) + 20;
+                    }
+                    return currentData;
+                });
+                db.ref("users/" + userId + "/lastBonus").set(today);
+                alert("অভিনন্দন! আপনি ২০ টাকা ডেইলি বোনাস পেলেন।");
+            }
+        });
+    }
 
-            <div>
-                <label class="text-[11px] text-slate-400 block mb-1">পরিমাণ (টাকা)</label>
-                <input type="number" id="withdrawAmount" placeholder="ন্যূনতম ২০০০ ৳" class="w-full bg-slate-950 border border-slate-800 p-2.5 rounded-xl text-white text-xs focus:outline-none focus:border-emerald-500">
-            </div>
-            
-            <button onclick="requestWithdraw()" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold text-xs shadow-lg shadow-blue-600/20 transition active:scale-95">উইথড্র রিকোয়েস্ট পাঠান</button>
-        </div>
-    </main>
+    // উইথড্র সিস্টেম (সর্বনিম্ন ২০০০ টাকা)
+    function requestWithdraw() {
+        let method = document.getElementById("payment-method").value;
+        let amount = parseFloat(document.getElementById("withdraw-amount").value);
+        let account = document.getElementById("withdraw-account").value;
 
-    <!-- Admin Panel Modal (Bright Red Color Theme) -->
-    <div id="adminModal" class="fixed inset-0 bg-black/85 backdrop-blur-sm hidden flex justify-center items-center p-4 z-50">
-        <div class="bg-slate-900 border border-red-500/30 p-5 rounded-3xl w-full max-w-lg max-h-[85vh] overflow-y-auto shadow-2xl space-y-4">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
-                <h3 class="text-base font-extrabold text-red-500 flex items-center gap-1.5">🔒 অ্যাডমিন প্যানেল</h3>
-                <button onclick="closeAdminModal()" class="text-slate-400 hover:text-white font-bold bg-slate-800 w-8 h-8 rounded-full flex items-center
+        if (!amount || amount < 2000) {
+            alert("সর্বনিম্ন উইথড্র পরিমাণ ২০০০ টাকা হতে হবে!");
+            return;
+        }
+        if (!account) {
+            alert("সঠিক পেমেন্ট নম্বর দিন!");
+            return;
+        }
+
+        userRef.once("value", (snapshot) => {
+            let data = snapshot.val();
+            let currentBalance = data.balance || 0;
+
+            if (currentBalance < amount) {
+                alert("আপনার পর্যাপ্ত ব্যালেন্স নেই!");
+            } else {
+                userRef.update({ balance: currentBalance - amount });
+                db.ref("withdrawRequests/" + userId).push({
+                    method: method,
+                    amount: amount,
+                    account: account,
+                    status: "Pending",
+                    time: new Date().toLocaleString()
+                });
+                alert(`${method}-এর মাধ্যমে ৳${amount} উইথড্র রিকোয়েস্ট সফলভাবে জমা হয়েছে!`);
+            }
+        });
+    }
+
+    // অ্যাডমিন লগইন সিস্টেম (পিন: 48499)
+    function loginAdmin() {
+        let pin = document.getElementById("admin-pin").value;
+        if (pin === "48499") {
+            document.getElementById("admin-panel").classList.remove("hidden");
+            loadAdminData();
+            alert("অ্যাডমিন লগইন সফল!");
+        } else {
+            alert("ভুল পিন দিয়েছেন!");
+        }
+    }
+
+    function closeAdmin() {
+        document.getElementById("admin-panel").classList.add("hidden");
+    }
+
+    // অ্যাডমিন মিটার ও ইউজারদের লাইভ হিসাব
+    function loadAdminData() {
+        db.ref("users").on("value", (snapshot) => {
+            let users = snapshot.val();
+            let listHTML = "";
+            let totalUsers = 0;
+
+            if (users) {
+                for (let uid in users) {
+                    totalUsers++;
+                    let u = users[uid];
+                    listHTML += `<p>🆔 <b>${uid}</b><br>💰 টাকা: ৳${u.balance || 0} | ✅ টাস্ক: ${u.adsWatched || 0}টি</p><hr style="border-color:#2a1b4e;">`;
+                }
+            }
+            document.getElementById("admin-total-users").innerText = totalUsers;
+            document.getElementById("admin-user-list").innerHTML = listHTML;
+        });
+    }
+</script>
+
+</body>
+</html>
