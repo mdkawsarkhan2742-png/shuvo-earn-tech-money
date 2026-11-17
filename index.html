@@ -152,17 +152,14 @@
             margin-bottom: 8px;
             box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
         }
-        .big-btn-red {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: white;
-            border: none;
-            padding: 10px;
-            width: 100%;
-            border-radius: 10px;
-            font-weight: bold;
-            font-size: 13px;
+        /* Hidden Admin Trigger Area for Owner */
+        .hidden-admin-trigger {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 10px;
+            color: #94a3b8;
             cursor: pointer;
-            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+            user-select: none;
         }
         /* Fullscreen Ad Overlay with Proper Branding & Timer */
         #ad-overlay {
@@ -283,7 +280,9 @@
     </div>
 
     <button class="big-btn-green" onclick="openWithdrawModal()">💰 টাকা উত্তোলন (Withdraw)</button>
-    <button class="big-btn-red" onclick="openAdminModal()">🔒 অ্যাডমিন প্যানেল (গোপন)</button>
+    
+    <!-- Hidden Admin Trigger ( সাধারণ ইউজাররা দেখবে না, শুধু আপনি অ্যাপের নিচে লোগোতে বা ফাঁকা জায়গায় ডাবল ক্লিক বা ট্যাপ করে প্রবেশ করতে পারবেন ) -->
+    <div class="hidden-admin-trigger" ondblclick="openAdminModal()">Shuvo Earn Tech v2.6 • Developer Panel</div>
 </div>
 
 <!-- Fullscreen Ad Overlay with Proper Branding & Timer -->
@@ -332,7 +331,6 @@
     const globalTasksRef = db.ref('globalTasks');
     const withdrawsRef = db.ref('withdraws');
 
-    // Register / Update User Profile in Firebase with Real Telegram Name & Username
     userRef.once('value', (snapshot) => {
         let updateData = {
             name: userName,
@@ -350,13 +348,11 @@
         userRef.update(updateData);
     });
 
-    // Realtime Balance Listener
     userRef.child('balance').on('value', (snapshot) => {
         const balance = snapshot.val() || 0;
         document.getElementById("user-balance").innerText = balance.toFixed(2);
     });
 
-    // Realtime Task Counters Listener
     userRef.on('value', (snapshot) => {
         let data = snapshot.val() || {};
         document.getElementById("t1-done").innerText = data.t1Done || 0;
@@ -401,7 +397,6 @@
                 return;
             }
 
-            // Trigger Monetag Ad SDK
             if (typeof show_12278984 === 'function') {
                 show_12278984().catch(e => console.log(e));
             }
@@ -447,7 +442,7 @@
             <label style="font-size:11px; font-weight:bold; color:#64748b;">একাউন্ট নম্বর:</label>
             <input type="text" id="w-number" placeholder="আপনার বিকাশ/নগদ নম্বর দিন" class="input-box" style="margin-top:4px;">
             <button onclick="submitWithdraw()" class="big-btn-green" style="padding:8px; margin-top:8px;">রিকোয়েস্ট পাঠান</button>
-            <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border:none; padding:8px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:4px; font-size:12px;">বন্ধ করুন</button>
+            <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border.none; padding:8px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:4px; font-size:12px;">বন্ধ করুন</button>
         `;
     }
 
@@ -491,6 +486,7 @@
         document.getElementById("modal-bg").style.display = "block";
         document.getElementById("modal-body-content").innerHTML = `
             <h3 style="margin-top:0; color:#1e293b; font-size:16px;">অ্যাডমিন প্যানেল</h3>
+            <!-- type="password" ব্যবহার করা হয়েছে যাতে পিন নম্বর স্টার বা ডট হয়ে লুকিয়ে থাকে -->
             <input type="password" id="admin-pin-input" placeholder="পিন নম্বর লিখুন (48499)" class="input-box">
             <button onclick="verifyAdminPin()" class="action-btn" style="width:100%; padding:8px; margin-bottom:8px;">লগইন করুন</button>
             <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border:none; padding:8px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">বন্ধ করুন</button>
@@ -534,7 +530,7 @@
                 let wdHtml = "<h4 style='color:#d97706; border-bottom:1px solid #e2e8f0; padding-bottom:3px; margin:10px 0;'>উইথড্র রিকোয়েস্টসমূহ:</h4>";
                 for (let wid in wds) {
                     let w = wds[wid];
-                    wdHtml += `<div style="background:#fffbeb; padding:6px; border-radius:5px; margin-bottom:4px; border:1px solid #fef3c7;">
+                    wdHtml += `<div style="background:#fffbeb; padding-bottom:6px; border-radius:5px; margin-bottom:4px; border:1px solid #fef3c7; padding:6px;">
                         <b>👤 ${w.name}</b> (${w.username || ''})<br>
                         <b>💳 পদ্ধতি:</b> ${w.method} (${w.number})<br>
                         <b>💵 পরিমাণ:</b> ${w.amount} ৳ [স্ট্যাটাস: <b>${w.status}</b>]`;
