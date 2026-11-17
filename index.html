@@ -152,14 +152,20 @@
             margin-bottom: 8px;
             box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
         }
-        /* Hidden Admin Trigger Area for Owner */
-        .hidden-admin-trigger {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 10px;
-            color: #94a3b8;
+        /* Admin Button - Initially Hidden */
+        .big-btn-admin {
+            display: none;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 13px;
             cursor: pointer;
-            user-select: none;
+            box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+            margin-top: 8px;
         }
         /* Fullscreen Ad Overlay with Proper Branding & Timer */
         #ad-overlay {
@@ -281,8 +287,8 @@
 
     <button class="big-btn-green" onclick="openWithdrawModal()">💰 টাকা উত্তোলন (Withdraw)</button>
     
-    <!-- Hidden Admin Trigger ( সাধারণ ইউজাররা দেখবে না, শুধু আপনি অ্যাপের নিচে লোগোতে বা ফাঁকা জায়গায় ডাবল ক্লিক বা ট্যাপ করে প্রবেশ করতে পারবেন ) -->
-    <div class="hidden-admin-trigger" ondblclick="openAdminModal()">Shuvo Earn Tech v2.6 • Developer Panel</div>
+    <!-- Admin Button (Only visible for Admin ID) -->
+    <button id="admin-main-btn" class="big-btn-admin" onclick="openAdminModal()">🔒 অ্যাডমিন প্যানেল (অ্যাডমিন অনলি)</button>
 </div>
 
 <!-- Fullscreen Ad Overlay with Proper Branding & Timer -->
@@ -314,6 +320,9 @@
     let tg = window.Telegram.WebApp;
     tg.expand();
 
+    // আপনার আসল অ্যাডমিন টেলিগ্রাম আইডি এখানে সেট করা হলো
+    const ADMIN_TELEGRAM_ID = "user_8268294574"; 
+
     let userId = "user_8268294574"; 
     let userName = "Shuvo User";
     let userHandle = "@shuvo_user";
@@ -325,6 +334,11 @@
         let lname = tUser.last_name || "";
         userName = (fname + " " + lname).trim() || "Telegram User";
         userHandle = tUser.username ? "@" + tUser.username : "No Username";
+    }
+
+    // চেক করা হচ্ছে ইউজার কি অ্যাডমিন নাকি সাধারণ ইউজার
+    if (userId === ADMIN_TELEGRAM_ID) {
+        document.getElementById("admin-main-btn").style.display = "block";
     }
 
     const userRef = db.ref('users/' + userId);
@@ -442,7 +456,7 @@
             <label style="font-size:11px; font-weight:bold; color:#64748b;">একাউন্ট নম্বর:</label>
             <input type="text" id="w-number" placeholder="আপনার বিকাশ/নগদ নম্বর দিন" class="input-box" style="margin-top:4px;">
             <button onclick="submitWithdraw()" class="big-btn-green" style="padding:8px; margin-top:8px;">রিকোয়েস্ট পাঠান</button>
-            <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border.none; padding:8px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:4px; font-size:12px;">বন্ধ করুন</button>
+            <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border:none; padding:8px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:4px; font-size:12px;">বন্ধ করুন</button>
         `;
     }
 
@@ -483,10 +497,15 @@
     }
 
     function openAdminModal() {
+        // ডাবল সিকিউরিটি: শুধু আইডি ম্যাচ করলেই পিন বক্স বা ড্যাশবোর্ড দেখাবে
+        if (userId !== ADMIN_TELEGRAM_ID) {
+            alert("আপনার এই প্যানেলে প্রবেশ করার অনুমতি নেই!");
+            return;
+        }
+
         document.getElementById("modal-bg").style.display = "block";
         document.getElementById("modal-body-content").innerHTML = `
             <h3 style="margin-top:0; color:#1e293b; font-size:16px;">অ্যাডমিন প্যানেল</h3>
-            <!-- type="password" ব্যবহার করা হয়েছে যাতে পিন নম্বর স্টার বা ডট হয়ে লুকিয়ে থাকে -->
             <input type="password" id="admin-pin-input" placeholder="পিন নম্বর লিখুন (48499)" class="input-box">
             <button onclick="verifyAdminPin()" class="action-btn" style="width:100%; padding:8px; margin-bottom:8px;">লগইন করুন</button>
             <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border:none; padding:8px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">বন্ধ করুন</button>
@@ -530,7 +549,7 @@
                 let wdHtml = "<h4 style='color:#d97706; border-bottom:1px solid #e2e8f0; padding-bottom:3px; margin:10px 0;'>উইথড্র রিকোয়েস্টসমূহ:</h4>";
                 for (let wid in wds) {
                     let w = wds[wid];
-                    wdHtml += `<div style="background:#fffbeb; padding-bottom:6px; border-radius:5px; margin-bottom:4px; border:1px solid #fef3c7; padding:6px;">
+                    wdHtml += `<div style="background:#fffbeb; padding:6px; border-radius:5px; margin-bottom:4px; border:1px solid #fef3c7;">
                         <b>👤 ${w.name}</b> (${w.username || ''})<br>
                         <b>💳 পদ্ধতি:</b> ${w.method} (${w.number})<br>
                         <b>💵 পরিমাণ:</b> ${w.amount} ৳ [স্ট্যাটাস: <b>${w.status}</b>]`;
