@@ -152,7 +152,6 @@
             margin-bottom: 8px;
             box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
         }
-        /* Hidden Secret Admin Trigger at Footer */
         .secret-admin-footer {
             text-align: center;
             margin-top: 20px;
@@ -160,7 +159,6 @@
             color: #cbd5e1;
             user-select: none;
         }
-        /* Fullscreen Ad Overlay */
         #ad-overlay {
             display: none;
             position: fixed;
@@ -233,11 +231,11 @@
             <button class="logout-btn" onclick="location.reload()">🔄 রিফ্রেশ</button>
         </div>
         <div class="notice-box">
-            আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহ। সবাই বেশি বেশি কাজ করেন এবং বেশি বেশি ইনকাম করেন।
+            আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহ। সবাই বেশি বেশি কাজ করেন এবং বেশি বেশি পয়েন্ট ইনকাম করুন।
         </div>
         <div class="balance-box">
-            <div style="font-size: 10px; color: #64748b; margin-bottom: 1px;">আপনার মোট ব্যালেন্স</div>
-            ৳ <span id="user-balance">0.00</span>
+            <div style="font-size: 10px; color: #64748b; margin-bottom: 1px;">আপনার মোট পয়েন্ট</div>
+            <span id="user-balance">0</span> পয়েন্ট
         </div>
     </div>
 
@@ -245,42 +243,42 @@
     <div class="card">
         <div class="card-info">
             <h4>🎯 প্রথম টাস্ক</h4>
-            <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
+            <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ১ পয়েন্ট)</p>
             <div class="count-badge">সম্পন্ন: <span id="t1-done">0</span> / 500</div>
         </div>
-        <button class="action-btn" onclick="startTask(1, 0.07)">কাজ করুন</button>
+        <button class="action-btn" onclick="startTask(1, 1)">কাজ করুন</button>
     </div>
 
     <!-- Task 2 -->
     <div class="card">
         <div class="card-info">
             <h4>🎯 দ্বিতীয় টাস্ক</h4>
-            <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ৳ ০.০৭)</p>
+            <p>১৫ সেকেন্ড অ্যাড দেখুন (প্রতি অ্যাড ১ পয়েন্ট)</p>
             <div class="count-badge">সম্পন্ন: <span id="t2-done">0</span> / 500</div>
         </div>
-        <button class="action-btn" onclick="startTask(2, 0.07)">কাজ করুন</button>
+        <button class="action-btn" onclick="startTask(2, 1)">কাজ করুন</button>
     </div>
 
     <!-- Task 3 -->
     <div class="card">
         <div class="card-info">
             <h4>🎯 তৃতীয় টাস্ক</h4>
-            <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ৳ ০.০৭)</p>
+            <p>১৫ সেকেন্ড ভিডিও দেখুন (প্রতি ভিডিও ১ পয়েন্ট)</p>
             <div class="count-badge">সম্পন্ন: <span id="t3-done">0</span> / 500</div>
         </div>
-        <button class="action-btn" onclick="startTask(3, 0.07)">কাজ করুন</button>
+        <button class="action-btn" onclick="startTask(3, 1)">কাজ করুন</button>
     </div>
 
     <!-- Daily Bonus -->
     <div class="bonus-card">
         <div style="font-weight: bold; font-size: 13px; color: #d97706;">🎁 ডেইলি বোনাস</div>
-        <p style="font-size: 10px; color: #64748b; margin: 3px 0 6px 0;">প্রতিদিন একবার ফ্রি ১০ টাকা বোনাস নিন!</p>
-        <button id="bonus-btn-el" class="bonus-btn" onclick="claimDailyBonus()">১০ টাকা বোনাস क्লেইম করুন</button>
+        <p style="font-size: 10px; color: #64748b; margin: 3px 0 6px 0;">প্রতিদিন একবার ফ্রি ১০০ পয়েন্ট বোনাস নিন!</p>
+        <button id="bonus-btn-el" class="bonus-btn" onclick="claimDailyBonus()">১০০ পয়েন্ট বোনাস क्লেইম করুন</button>
     </div>
 
-    <button class="big-btn-green" onclick="openWithdrawModal()">💰 টাকা উত্তোলন (Withdraw)</button>
+    <button class="big-btn-green" onclick="openWithdrawModal()">💰 পয়েন্ট উত্তোলন (Withdraw)</button>
     
-    <!-- Secret Trigger Footer ( এখানে দুইবার ট্যাপ করলেই শুধু অ্যাডমিন পিন বক্স আসবে ) -->
+    <!-- Secret Trigger Footer ( ডাবল ট্যাপ করলে অ্যাডমিন পিন বক্স আসবে ) -->
     <div class="secret-admin-footer" ondblclick="openAdminModal()">
         Shuvo Earn Tech © 2026
     </div>
@@ -351,7 +349,7 @@
 
     userRef.child('balance').on('value', (snapshot) => {
         const balance = snapshot.val() || 0;
-        document.getElementById("user-balance").innerText = balance.toFixed(2);
+        document.getElementById("user-balance").innerText = balance;
     });
 
     userRef.on('value', (snapshot) => {
@@ -377,11 +375,11 @@
             }
 
             userRef.child('balance').transaction((currentBalance) => {
-                return Number(((currentBalance || 0) + 10).toFixed(2));
+                return (currentBalance || 0) + 100;
             }, (error, committed) => {
                 if (committed) {
                     userRef.child('lastBonusDate').set(today);
-                    alert("সফলভাবে ১০ টাকা ডেইলি বোনাস দেওয়া হয়েছে!");
+                    alert("সফলভাবে ১০০ পয়েন্ট ডেইলি বোনাস দেওয়া হয়েছে!");
                 }
             });
         });
@@ -418,12 +416,12 @@
                     globalTasksRef.child(taskKey).set(Math.max(0, remaining - 1));
 
                     userRef.child('balance').transaction((currentBalance) => {
-                        return Number(((currentBalance || 0) + reward).toFixed(2));
+                        return (currentBalance || 0) + reward;
                     });
 
                     userRef.child(`t${taskNo}Done`).transaction((count) => (count || 0) + 1);
                     
-                    alert(`অভিনন্দন! টাস্ক সফল হয়েছে এবং ${reward} টাকা যোগ হয়েছে।`);
+                    alert(`অভিনন্দন! টাস্ক সফল হয়েছে এবং ${reward} পয়েন্ট যোগ হয়েছে।`);
                 }
             }, 1000);
         });
@@ -432,8 +430,8 @@
     function openWithdrawModal() {
         document.getElementById("modal-bg").style.display = "block";
         document.getElementById("modal-body-content").innerHTML = `
-            <h3 style="margin-top:0; color:#1e293b; font-size:16px;">টাকা উত্তোলন (Withdraw)</h3>
-            <p style="font-size:11px; color:#d97706; margin-bottom:10px;">⚠️ ন্যূনতম উইথড্র ২৫০০ টাকা। ২৪ ঘন্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
+            <h3 style="margin-top:0; color:#1e293b; font-size:16px;">পয়েন্ট উত্তোলন (Withdraw)</h3>
+            <p style="font-size:11px; color:#d97706; margin-bottom:10px;">⚠️ ন্যূনতম উইথড্র ৪৫০০ পয়েন্ট। ২৪ ঘন্টার মধ্যে পেমেন্ট দেওয়া হবে।</p>
             <label style="font-size:11px; font-weight:bold; color:#64748b;">মাধ্যম নির্বাচন করুন:</label>
             <select id="w-method" class="input-box" style="margin-top:4px;">
                 <option value="Bkash">Bkash</option>
@@ -459,8 +457,8 @@
             let data = snapshot.val() || {};
             let balance = data.balance || 0;
 
-            if (balance < 2500) {
-                alert("উইথড্র করার জন্য ন্যূনতম ২৫০০ টাকা প্রয়োজন!");
+            if (balance < 4500) {
+                alert("উইথড্র করার জন্য ন্যূনতম ৪৫০০ পয়েন্ট প্রয়োজন!");
                 return;
             }
 
@@ -472,7 +470,7 @@
                         username: userHandle,
                         method: method,
                         number: number,
-                        amount: balance,
+                        amount: balance + " পয়েন্ট",
                         status: "Pending",
                         time: new Date().toLocaleString()
                     });
@@ -487,7 +485,6 @@
         document.getElementById("modal-bg").style.display = "block";
         document.getElementById("modal-body-content").innerHTML = `
             <h3 style="margin-top:0; color:#1e293b; font-size:16px;">অ্যাডমিন প্যানেল</h3>
-            <!-- type="password" থাকায় পাসওয়ার্ড ডট বা স্টার হয়ে লুকিয়ে থাকবে -->
             <input type="password" id="admin-pin-input" placeholder="পিন নম্বর লিখুন (48499)" class="input-box">
             <button onclick="verifyAdminPin()" class="action-btn" style="width:100%; padding:8px; margin-bottom:8px;">লগইন করুন</button>
             <button onclick="closeModal()" style="background:#cbd5e1; color:#334155; border:none; padding:8px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; font-size:12px;">বন্ধ করুন</button>
@@ -506,7 +503,7 @@
     function loadAdminDashboard() {
         let content = `
             <h3 style="color:#2563eb; margin-top:0; font-size:15px;">অ্যাডমিন ড্যাশবোর্ড</h3>
-            <button onclick="resetAllBalances()" style="background:#ef4444; color:white; border:none; padding:7px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; margin-bottom:10px; font-size:11px;">🔄 সব ইউজারের ব্যালেন্স জিরো করুন</button>
+            <button onclick="resetAllBalances()" style="background:#ef4444; color:white; border:none; padding:7px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; margin-bottom:10px; font-size:11px;">🔄 সব ইউজারের পয়েন্ট জিরো করুন</button>
             <div id="admin-dynamic-data" style="max-height: 250px; overflow-y: auto; font-size:11px;">লোড হচ্ছে...</div>
             <button onclick="closeModal()" style="background:#64748b; color:white; border:none; padding:7px; width:100%; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:10px; font-size:11px;">বন্ধ করুন</button>
         `;
@@ -522,7 +519,7 @@
                 userHtml += `<div style="background:#f8fafc; padding:6px; border-radius:5px; margin-bottom:4px; border:1px solid #e2e8f0;">
                     <b>👤 নাম:</b> ${u.name || 'User'}<br>
                     <b>🏷️ ইউজারনেম:</b> ${u.username || 'N/A'}<br>
-                    <b>💰 ব্যালেন্স:</b> ${(u.balance || 0).toFixed(2)} ৳
+                    <b>💰 পয়েন্ট:</b> ${u.balance || 0} পয়েন্ট
                 </div>`;
             }
 
@@ -534,7 +531,7 @@
                     wdHtml += `<div style="background:#fffbeb; padding:6px; border-radius:5px; margin-bottom:4px; border:1px solid #fef3c7;">
                         <b>👤 ${w.name}</b> (${w.username || ''})<br>
                         <b>💳 পদ্ধতি:</b> ${w.method} (${w.number})<br>
-                        <b>💵 পরিমাণ:</b> ${w.amount} ৳ [স্ট্যাটাস: <b>${w.status}</b>]`;
+                        <b>💵 পরিমাণ:</b> ${w.amount} [স্ট্যাটাস: <b>${w.status}</b>]`;
                     
                     if (w.status === "Pending") {
                         wdHtml += `<br><div style="margin-top:4px; display:flex; gap:5px;">
@@ -557,13 +554,13 @@
     }
 
     function resetAllBalances() {
-        if(confirm("আপনি কি সত্যিই সকল ইউজারের ব্যালেন্স জিরো করে দিতে চান?")) {
+        if(confirm("আপনি কি সত্যিই সকল ইউজারের পয়েন্ট জিরো করে দিতে চান?")) {
             db.ref('users').once('value', (snapshot) => {
                 let users = snapshot.val() || {};
                 for(let id in users) {
                     db.ref('users/' + id + '/balance').set(0);
                 }
-                alert("সকল ইউজারের ব্যালেন্স সফলভাবে জিরো করা হয়েছে!");
+                alert("সকল ইউজারের পয়েন্ট সফলভাবে জিরো করা হয়েছে!");
             });
         }
     }
