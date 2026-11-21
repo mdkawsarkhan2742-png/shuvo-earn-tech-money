@@ -273,7 +273,7 @@
     <div class="bonus-card">
         <div style="font-weight: bold; font-size: 13px; color: #d97706;">🎁 ডেইলি বোনাস</div>
         <p style="font-size: 10px; color: #64748b; margin: 3px 0 6px 0;">প্রতিদিন একবার ফ্রি ১০০ পয়েন্ট বোনাস নিন!</p>
-        <button id="bonus-btn-el" class="bonus-btn" onclick="claimDailyBonus()">১০০ পয়েন্ট বোনাস क्লেইম করুন</button>
+        <button id="bonus-btn-el" class="bonus-btn" onclick="claimDailyBonus()">১০০ পয়েন্ট বোনাস ক্লেইম করুন</button>
     </div>
 
     <button class="big-btn-green" onclick="openWithdrawModal()">💰 পয়েন্ট উত্তোলন (Withdraw)</button>
@@ -389,11 +389,9 @@
         let taskKey = `t${taskNo}`;
         globalTasksRef.child(taskKey).once('value', (snapshot) => {
             let remaining = snapshot.val();
-            if (remaining === null) remaining = 500;
-
-            if (remaining <= 0) {
-                alert("এই টাস্কের লিমিট শেষ!");
-                return;
+            if (remaining === null || remaining <= 0) {
+                remaining = 500;
+                globalTasksRef.child(taskKey).set(500);
             }
 
             if (typeof show_12278984 === 'function') {
@@ -413,7 +411,7 @@
                     clearInterval(interval);
                     overlay.style.display = "none";
 
-                    globalTasksRef.child(taskKey).set(Math.max(0, remaining - 1));
+                    globalTasksRef.child(taskKey).set(Math.max(1, remaining - 1));
 
                     userRef.child('balance').transaction((currentBalance) => {
                         return (currentBalance || 0) + reward;
